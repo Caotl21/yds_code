@@ -1,0 +1,61 @@
+# Namespace for attack simulation
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: security-playground
+---
+# ServiceAccount for attack simulation
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: attack-sim-sa
+  namespace: security-playground
+---
+# Attack simulation Pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: attack-simulator
+  namespace: security-playground
+  labels:
+    app: attack-simulator
+    security-test: "true"
+spec:
+  serviceAccountName: attack-sim-sa
+  # 指定部署节点 - 替换为你的目标节点名
+  nodeSelector:
+    #kubernetes.io/hostname: caotl21  # 替换为你的节点名
+    computing_device: compute_node4
+  # 容忍污点，允许在master节点运行
+  # tolerations:
+  # - key: node-role.kubernetes.io/control-plane
+  #   operator: Exists
+  #   effect: NoSchedule
+  # - key: node-role.kubernetes.io/master
+  #   operator: Exists
+  #   effect: NoSchedule
+  # 特权配置用于容器逃逸测试
+  hostNetwork: true
+  hostPID: true
+  containers:
+  - name: attack-container
+    image: docker.io/library/attack:6.0  # 你的本地镜像
+    imagePullPolicy:  IfNotPresent  # 使用本地镜像，不从仓库拉取
+    command: ["/bin/sh"]
+    args: ["-c", "while true; do sleep 3600; done"]  # 保持容器运行
+    env:
+    - name: SCENARIO
+      value: "priv-esc"  # 默认场景，可以修改为 priv-esc, net-scan, reverse-shell
+    - name: TARGET_NETWORK
+      value: "10.244.0.0/16"  # K8s Pod网络
+    - name: ATTACKER_HOST
+      value: "192.168.1.113"  # 攻击者机器IP
+    securityContext:
+      privileged: true
+      runAsUser: 0
+      capabilities:
+        add:
+        - SYS_ADMIN
+        - NET_ADMIN
+        - SYS_PTRACE
+  restartPolicy: Always

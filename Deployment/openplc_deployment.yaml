@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: control-belt1-deployment
+  labels:
+    app: control-belt1-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: control-belt1-v2
+  template:
+    metadata:
+      labels:
+        app: control-belt1-v2
+    spec:
+      containers:
+        - name: control-belt1-container
+          image: crpi-v0s88r5y9kedn2bv.cn-shanghai.personal.cr.aliyuncs.com/zsns1/yds:control_belt1_v4
+          env:
+            - name: Server_Host
+              # value: processor-service-2
+              value: "http://192.168.1.113"
+            - name: Server_Port
+              value: "8000/belt1"
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: sys-class-gpio
+            mountPath: /sys
+            readOnly: false
+      volumes:
+        - name: sys-class-gpio
+          hostPath:
+            path: /sys
+            type: Directory
+      nodeSelector:
+        computing_device: compute_node3
+      hostNetwork: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: control-belt2-v2
+  labels:
+    app: control-belt2-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: control-belt2-v2
+  template:
+    metadata:
+      labels:
+        app: control-belt2-v2
+    spec:
+      containers:
+      - name: control-belt2-container
+        image: crpi-v0s88r5y9kedn2bv.cn-shanghai.personal.cr.aliyuncs.com/zsns1/yds:control_belt2_v2
+        securityContext:
+          privileged: true
+          runAsUser: 0
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: sys-class-gpio
+            mountPath: /sys
+            readOnly: false
+      volumes:
+        - name: sys-class-gpio
+          hostPath:
+            path: /sys
+            type: Directory
+      nodeSelector:
+        computing_device: compute_node1

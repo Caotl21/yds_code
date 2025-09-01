@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<!--
+    工业智能化弹性调度系统 - 仪表板页面
+    功能：实时显示产线检测状态、系统性能指标、容器状态和K8s节点信息
+    作者：Brics腾飞团队
+    版本：1.0
+-->
+<html lang="zh-CN" data-bs-theme="dark">
+<head>
+    <!-- 基础页面配置 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brics腾飞！</title>
+
+    <!-- 外部样式和脚本库 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* ========================================
+           CSS变量定义 - 工业风格主题配色方案
+           ======================================== */
+        :root {
+            /* 暗色主题（默认）- 自定义CSS变量 */
+            --industrial-dark: #1e2126;       /* 最深背景色，用于页面背景 */
+            --industrial-medium: #2d3339;     /* 中等深度背景色，用于卡片背景 */
+            --industrial-medium2: #343b44;    /* 中等深度背景色变体，用于容器项背景 */
+            --industrial-light: #3d4550;      /* 较浅背景色，用于卡片头部 */
+            --industrial-accent: #ffb400;     /* 强调色，用于重要元素和边框 */
+            --industrial-success: #2ecc71;    /* 成功状态颜色 */
+            --industrial-danger: #e74c3c;     /* 危险/错误状态颜色 */
+            --industrial-warning: #f39c12;    /* 警告状态颜色 */
+            --industrial-info: #3498db;       /* 信息状态颜色 */
+            --industrial-text: #ecf0f1;       /* 主要文字颜色 */
+            --industrial-text-muted: #95a5a6; /* 次要文字颜色 */
+            --industrial-border: #4a5568;     /* 边框颜色 */
+        }
+
+        /* 亮色主题 - 自定义CSS变量 */
+        [data-bs-theme="light"] {
+            --industrial-dark: #f8f9fa;       /* 最浅背景色，用于页面背景 */
+            --industrial-medium: #e9ecef;     /* 中等浅度背景色，用于卡片背景 */
+            --industrial-medium2: #d8dce2;    /* 中等浅度背景色变体，用于容器项背景 */
+            --industrial-light: #dee2e6;      /* 较深背景色，用于卡片头部 */
+            --industrial-accent: #fd7e14;     /* 强调色，用于重要元素和边框 */
+            --industrial-success: #198754;    /* 成功状态颜色 */
+            --industrial-danger: #dc3545;     /* 危险/错误状态颜色 */
+            --industrial-warning: #ffc107;    /* 警告状态颜色 */
+            --industrial-info: #0d6efd;       /* 信息状态颜色 */
+            --industrial-text: #212529;       /* 主要文字颜色 */
+            --industrial-text-muted: #6c757d; /* 次要文字颜色 */
+            --industrial-border: #ced4da;     /* 边框颜色 */
+        }
+
+        /* ========================================
+           基础页面样式
+           ======================================== */
+        
+        /* 页面主体样式 */
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 字体设置，优先使用微软雅黑 */
+            background-color: var(--industrial-dark);  /* 使用暗色变量作为背景色 */
+            color: var(--industrial-text);             /* 使用文本颜色变量 */
+            padding-top: 20px;                         /* 顶部内边距 */
+        }
+        /* 页面主题宽度 */
+        .container {
+            max-width: 1800px; /* 增加最大宽度以适应16:9显示器 */
+            max-height: 800px;
+            padding: 0 20px; /* 左右内边距 */
+        }
+
+        /* 页面头部样式 */
+        .header {
+            position: relative;                        /* 相对定位，用于放置主题切换按钮 */
+            margin-bottom: 10px;                       /* 底部外边距 */
+            border-bottom: 2px solid var(--industrial-accent); /* 底部边框使用强调色 */
+            padding-bottom: 15px;                      /* 底部内边距 */
+        }
+
+        /* 主标题样式 */
+        .header h1 {
+            font-weight: 700;                          /* 粗体标题 */
+            font-size: 3.5rem;
+            color: var(--industrial-text);             /* 使用文本颜色变量 */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* 文字阴影效果 */
+        }
+
+        /* 副标题样式 */
+        .header p {
+            color: var(--industrial-text-muted);       /* 使用次要文本颜色 */
+            font-size: 1.5rem;                         /* 字体大小 */
+            margin-bottom: 0;                          /* 移除底部外边距 */
+        }
+
+        /* ========================================
+           卡片组件样式
+           ======================================== */
+        /* 通用卡片样式 */
+        .card {
+            border-radius: 4px;                        /* 圆角边框 */
+            background-color: var(--industrial-medium); /* 使用中等深度背景色 */
+            border: 1px solid var(--industrial-border); /* 边框 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* 阴影效果 */
+            margin-bottom: 20px;                       /* 底部外边距 */
+        }
+
+        /* 卡片头部样式 */
+        .card-header {
+            background-color: var(--industrial-light);  /* 使用较浅背景色 */
+            border-bottom: 1px solid var(--industrial-border); /* 底部边框 */
+            font-weight: 700;                          /* 半粗体 */
+            color: var(--industrial-text);             /* 使用文本颜色变量 */
+            padding: 12px 15px;                        /* 内边距 */
+            border-radius: 4px 4px 0 0 !important;     /* 上方圆角 */
+        }
+
+        /* 卡片主体样式 */
+        .card-body {
+            padding: 15px;                             /* 内边距 */
+            background-color: var(--industrial-medium); /* 使用中等深度背景色 */
+            color: var(--industrial-text);             /* 使用文本颜色变量 */
+        }
+
+        /* 产线检测卡片特殊样式 */
+        /*.detection-card {
+            height: 75%; /* 减少高度为原来的75% */
+        /*}*/
+
+        /* ========================================
+           图像显示组件样式
+           ======================================== */
+        /* 图像容器基础样式 */
+        .image-container {
+            position: relative;                        /* 相对定位，用于加载动画 */
+            margin-bottom: 15px;                       /* 底部外边距 */
+            border-radius: 8px;                        /* 圆角 */
+            overflow: hidden;                          /* 隐藏溢出内容 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* 阴影效果 */
+            width: 100%;                               /* 宽度100% */
+            background-color: var(--industrial-dark);  /* 背景色 */
+            height: 165px;                             /* 固定高度 */
+        }
+
+        /* 图像元素样式 */
+        .image-container img {
+            width: 100%;                               /* 宽度100% */
+            height: 100%;                              /* 高度100% */
+            object-fit: cover;                         /* 覆盖适配，保持比例 */
+            display: block;                            /* 块级显示 */
+        }
+
+        /* 图像加载过渡效果 */
+        .image-container img {
+            transition: opacity 0.3s ease;             /* 透明度过渡效果 */
+            opacity: 0.95;                             /* 默认透明度 */
+        }
+
+        /* 图像加载完成状态 */
+        .image-container img.loaded {
+            opacity: 1;                                /* 完全不透明 */
+        }
+
+        /* 图像悬停交互效果 */
+        .image-container:hover img {
+            transform: scale(1.02);                    /* 轻微放大 */
+            transition: transform 0.3s ease;           /* 变换过渡效果 */
+        }
+
+        /* 图像加载动画关键帧 */
+        @keyframes imageLoading {
+            0% { opacity: 0.6; }                       /* 初始透明度 */
+            50% { opacity: 0.8; }                      /* 中间透明度 */
+            100% { opacity: 0.6; }                     /* 结束透明度 */
+        }
+
+        /* 图像加载中提示文字 */
+        .image-container::before {
+            content: "加载中...";                       /* 显示文字 */
+            position: absolute;                        /* 绝对定位 */
+            top: 50%;                                  /* 垂直居中 */
+            left: 50%;                                 /* 水平居中 */
+            transform: translate(-50%, -50%);          /* 精确居中 */
+            color: var(--industrial-text-muted);       /* 文字颜色 */
+            z-index: 0;                                /* 层级 */
+            animation: imageLoading 1.5s infinite;     /* 加载动画 */
+        }
+
+        /* 确保图像在加载提示上方显示 */
+        .image-container img {
+            position: relative;                        /* 相对定位 */
+            z-index: 1;                                /* 层级高于加载提示 */
+        }
+
+        /* ========================================
+           缺陷检测状态样式
+           ======================================== */
+        /* 无缺陷状态指示器样式 */
+        .no-defect {
+            background-color: #d4edda;                 /* 浅绿色背景 */
+            color: #155724;                            /* 深绿色文字 */
+            padding: 8px 12px;                         /* 内边距 */
+            border-radius: 4px;                        /* 圆角 */
+            text-align: center;                        /* 文字居中 */
+            font-weight: 600;                          /* 半粗体 */
+        }
+
+        /* 有缺陷警告指示器样式 */
+        .defect-alert {
+            background-color: #f00920;                 /* 浅红色背景 */
+            color: #eee8e9;                            /* 深红色文字 */
+            padding: 8px 12px;                         /* 内边距 */
+            border-radius: 4px;                        /* 圆角 */
+            text-align: center;                        /* 文字居中 */
+            font-weight: 600;                          /* 半粗体 */
+        }
+
+        /* 缺陷项目容器样式 */
+        .defect-item {
+            display: flex;                             /* 弹性布局 */
+            align-items: center;                       /* 垂直居中对齐 */
+            margin-bottom: 5px;                        /* 底部外边距 */
+            padding: 5px;                              /* 内边距 */
+            background-color: #fccfcf;                 /* 浅灰色背景 */
+            border-radius: 4px;                        /* 圆角 */
+        }
+
+        /* 缺陷编号样式 */
+        .defect-number {
+            font-weight: bold;                         /* 粗体 */
+            margin-right: 10px;                        /* 右侧外边距 */
+            color: #0d0d0e;                            /* 深灰色 */
+        }
+
+        /* 缺陷类别样式 */
+        .defect-class {
+            font-weight: bold;                         /* 粗体 */
+            color: #dc3545;                            /* 红色 */
+            margin-right: 10px;                        /* 右侧外边距 */
+        }
+
+        /* 缺陷置信度样式 */
+        .defect-confidence {
+            color: #596269;                            /* 灰色 */
+            font-size: 0.9em;                          /* 较小字体 */
+        }
+
+        /* ========================================
+           性能图表和指标样式
+           ======================================== */
+        /* 图表容器样式 */
+        .chart-container {
+            height: 100px;                             /* 减少图表高度 */
+            margin-top: 10px;                          /* 顶部外边距 */
+        }
+
+        /* 系统信息布局 */
+        .system-info {
+            display: flex;                             /* 弹性布局 */
+            flex-wrap: wrap;                           /* 允许换行 */
+        }
+
+        /* 系统信息项样式 */
+        .system-info-item {
+            flex: 1 0 50%;                             /* 弹性项目，最小宽度50% */
+            margin-bottom: 10px;                       /* 底部外边距 */
+        }
+
+        /* ========================================
+           容器状态显示样式
+           ======================================== */
+        .container-status {
+            display: flex;
+            flex-direction: column;
+            max-height: 600px; /* 增加最大高度 */
+            overflow-y: auto;
+        }
+        .container-item-full {
+            width: 100%;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+        .container-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .container-details {
+            display: flex;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+            color: var(--industrial-text-muted);
+        }
+        .container-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--industrial-text);
+        }
+        .container-label {
+            color: var(--industrial-text-muted);
+            margin-right: 5px;
+        }
+        .container-node {
+            color: var(--industrial-info);
+            font-family: 'Consolas', monospace;
+            margin-right: 15px;
+        }
+        .container-uptime {
+            color: var(--industrial-text);
+        }
+        .badge {
+            font-size: 0.9rem;
+            padding: 5px 10px;
+        }
+        .ml-2 {
+            margin-left: 0.5rem;
+        }
+        .performance-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--industrial-info);
+            text-align: center;
+            margin: 3px 0;
+        }
+        .performance-label {
+            text-align: center;
+            color: var(--industrial-text-muted);
+            font-size: 0.85rem;
+        }
+        .badge.bg-success {
+            background-color: var(--industrial-success) !important;
+        }
+        
+        .badge.bg-danger {
+            background-color: var(--industrial-danger) !important;
+        }
+        
+        /* 工业风格指示灯效果 */
+        .indicator {
+            display: inline-block;                     /* 行内块元素 */
+            width: 12px;                               /* 宽度 */
+            height: 12px;                              /* 高度 */
+            border-radius: 50%;                        /* 圆形 */
+            margin-right: 8px;                         /* 右侧外边距 */
+            position: relative;                        /* 相对定位 */
+        }
+        
+        /* 开启状态的指示灯 */
+        .indicator.on {
+            background-color: var(--industrial-success); /* 使用成功状态颜色 */
+            box-shadow: 0 0 10px var(--industrial-success); /* 发光效果 */
+            animation: pulse 2s infinite;              /* 脉冲动画 */
+        }
+        
+        /* 关闭状态的指示灯 */
+        .indicator.off {
+            background-color: var(--industrial-danger); /* 使用危险状态颜色 */
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.5); /* 轻微发光效果 */
+        }
+        
+        /* 脉冲动画定义 */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); /* 初始阴影 */
+            }
+            70% {
+                box-shadow: 0 0 0 5px rgba(46, 204, 113, 0); /* 扩散阴影 */
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);   /* 消失阴影 */
+            }
+        }
+
+        /* ========================================
+           布局网格系统优化
+           ======================================== */
+        /* 确保卡片间隙一致 */
+        /* 确保卡片间隙一致 */
+        .row {
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+
+        .col-md-2 {
+            flex: 0 0 20%;
+            max-width: 22%;
+        }
+        
+        .col-md-3 {
+            flex: 0 0 30%;
+            max-width: 30%;
+        }
+
+        .col-md-4 {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        .col-md-5 {
+            flex: 0 0 35%;
+            max-width: 75%;
+        }
+
+        .col-md-7 {
+            flex: 0 0 65%;
+            
+        }
+        
+        .card {
+            height: 100%;
+            margin-bottom: 0;
+        }
+        
+        .mb-4 {
+            margin-bottom: 30px !important;
+        }
+        
+        /* 确保卡片内容高度一致 */
+        .detection-card .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detection-card .image-container {
+            flex: 0 0 auto;
+            height: 240px; /* 固定高度 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .detection-card #belt1-defects,
+        .detection-card #belt2-defects {
+            flex: 1 0 auto;
+            min-height: 60px;
+        }
+        
+        /* 确保容器状态卡片与其他卡片高度一致 */
+        .container-status {
+            max-height: 490px;
+            overflow-y: auto;
+        }
+        
+        /* 美化滚动条 */
+        .container-status::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .container-status::-webkit-scrollbar-track {
+            background: var(--industrial-dark);
+            border-radius: 4px;
+        }
+        
+        .container-status::-webkit-scrollbar-thumb {
+            background: var(--industrial-light);
+            border-radius: 4px;
+        }
+        
+        .container-status::-webkit-scrollbar-thumb:hover {
+            background: var(--industrial-accent);
+        }
+        /* 添加图像加载效果 */
+        .image-container img {
+            transition: opacity 0.3s ease;
+            opacity: 0.95;
+        }
+
+        .image-container img.loaded {
+            opacity: 1;
+        }
+
+        /* 添加图像悬停效果 */
+        .image-container:hover img {
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+
+        /* 添加图像边框 */
+        .image-container {
+            border: 1px solid var(--industrial-border);
+            padding: 2px;
+        }
+        /* 添加图像加载动画 */
+        @keyframes imageLoading {
+            0% { opacity: 0.6; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.6; }
+        }
+
+        .image-container::before {
+            content: "加载中...";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--industrial-text-muted);
+            z-index: 0;
+            animation: imageLoading 1.5s infinite;
+        }
+
+        .image-container img {
+            position: relative;
+            z-index: 1;
+        }
+        /* ========================================
+           节点状态显示样式
+           ======================================== */
+        .node-card {
+            /*background-color: rgba(238, 235, 235, 0.2);      /* 半透明背景 */
+            background-color: var(--industrial-medium2);
+            border-radius: 6px;                        /* 圆角 */
+            padding: 16px;                             /* 内边距 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);  /* 阴影效果 */
+            transition: all 0.3s ease;                 /* 过渡效果 */
+            border-left: 4px solid var(--industrial-border); /* 左侧边框 */
+            height: 100%;                              /* 高度100% */
+        }
+        /* 节点卡片悬停效果 */
+        .node-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .node-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--industrial-border);
+        }
+
+        .node-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--industrial-text);
+        }
+
+        .node-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .node-status.ready {
+            background-color: var(--industrial-success);
+            color: white;
+        }
+
+        .node-status.not-ready {
+            background-color: var(--industrial-danger);
+            color: white;
+        }
+
+        .node-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 两列等宽 */
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        /* 节点指标样式 */
+        .node-metric {
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .node-metric-label {
+            font-size: 0.9rem;
+            color: var(--industrial-text-muted);
+            margin-bottom: 8px;
+        }
+        /* 节点指标值 */
+        .node-metric-value {
+            font-weight: 500;  /* 调整字体粗细 */
+            color: var(--industrial-text);
+            font-size: 1.3rem;  /* 调整字体大小 */
+        }
+        /* 进度条样式 */
+        .progress {
+            height: 10px;
+            margin-top: 5px; /* 顶部外边距 */
+            background-color: var(--industrial-dark);
+        }
+
+        .node-uptime {
+            font-size: 0.9rem;
+            color: var(--industrial-text-muted);
+            margin-top: 10px;
+        }
+
+        /* 确保卡片高度一致 */
+        .h-100 {
+            height: 100% !important;
+        }
+
+        /* 调整图像容器高度 */
+        .image-container {
+            height: 220px;
+        }
+
+        /* 性能指标卡片样式 */
+        .performance-metrics {
+            margin-top: 5px;
+        }
+
+        .performance-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--industrial-info);
+            text-align: center;
+            margin: 3px 0;
+        }
+
+        .performance-label {
+            text-align: center;
+            color: var(--industrial-text-muted);
+            font-size: 0.75rem;
+        }
+
+        .chart-container {
+            height: 120px; /* 减少图表高度 */
+            margin-top: 8px;
+        }
+
+        /* 容器项和性能指标项共用样式 */
+        .container-item-full {
+            width: 100%;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-radius: 6px;
+            /*background-color: rgba(0, 0, 0, 0.2);*/
+            background-color: var(--industrial-medium2);
+            transition: all 0.2s ease;
+        }
+        
+        .container-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .container-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--industrial-text);
+        }
+
+        /* 确保图表在小卡片中正确显示 */
+        .container-item-full .chart-container {
+            width: 100%;
+        }
+
+        /* 调整第一行卡片高度 */
+        .detection-card {
+            height: 100%; /* 恢复为原来的100%高度 */
+        }
+
+        .container-status {
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* 减少高度为原来的75% */
+            overflow-y: auto;
+        }
+        /* 主题切换按钮样式 - 简化版 */
+        .theme-switch-wrapper {
+            position: absolute; /* 绝对定位，使按钮位于固定位置 */
+            top: 20px;          /* 距离顶部20px */
+            right: 20px;        /* 距离右侧20px */
+        }
+
+        /* 暗色主题下的按钮样式 */
+        #theme-toggle {
+            background-color: #2d3339; /* 暗色背景 */
+            color: #ecf0f1;            /* 浅色文字 */
+            border: 1px solid #4a5568; /* 暗色边框 */
+        }
+
+        /* 亮色主题下的按钮样式 */
+        [data-bs-theme="light"] #theme-toggle {
+            background-color: #e9ecef; /* 浅色背景 */
+            color: #212529;            /* 深色文字 */
+            border: 1px solid #ced4da; /* 浅色边框 */
+        }
+
+        /* 暗色主题（默认）- 使用Bootstrap变量 */
+        [data-bs-theme="dark"] {
+            --bs-body-bg: #1e2126;           /* 页面背景色 */
+            --bs-body-color: #ecf0f1;        /* 页面文字颜色 */
+            --bs-card-bg: #2d3339;           /* 卡片背景色 */
+            --bs-card-border-color: #4a5568; /* 卡片边框颜色 */
+            --bs-card-cap-bg: #3d4550;       /* 卡片头部背景色 */
+        }
+
+        /* 亮色主题 - 使用Bootstrap变量 */
+        [data-bs-theme="light"] {
+            --bs-body-bg: #f8f9fa;           /* 页面背景色 */
+            --bs-body-color: #212529;        /* 页面文字颜色 */
+            --bs-card-bg: #ffffff;           /* 卡片背景色 */
+            --bs-card-border-color: #dee2e6; /* 卡片边框颜色 */
+            --bs-card-cap-bg: #f8f9fa;       /* 卡片头部背景色 */
+        }
+        
+        /* 攻击记录项基础样式 */
+        .attack-record-item {
+            border: 1px solid #dee2e6;               /* 边框 */
+            border-radius: 8px;                      /* 圆角 */
+            margin-bottom: 8px;                      /* 底部外边距 */
+            padding: 12px;                           /* 内边距 */
+            background: var(--industrial-medium2);                       /* 白色背景 */
+            transition: all 0.3s ease;               /* 过渡动画 */
+            animation: slideInRight 0.5s ease-out;   /* 滑入动画 */
+        }
+        /* 攻击记录项悬停效果 */
+        .attack-record-item:hover {  
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
+        /* 不同严重程度的攻击记录样式 */
+        .attack-record-item.critical {      /* 严重 */
+            border-left: 4px solid #dc3545;
+        }
+
+        .attack-record-item.warning {
+            border-left: 4px solid #fd7e14;
+        }
+
+        .attack-record-item.performance {
+            border-left: 4px solid #079cff;
+        }
+
+        .attack-record-item.success {
+            border-left: 4px solid #198754;
+        }
+        /* 攻击记录容器滚动条样式 */
+        .attack-records-container {
+            scrollbar-width: thin;
+            scrollbar-color: #6c757d #f8f9fa;
+        }
+
+        .attack-records-container::-webkit-scrollbar { /* 滚动条宽度 */
+            width: 6px;
+        }
+
+        .attack-records-container::-webkit-scrollbar-track { /* 滚动条轨道背景 */
+            background: #f8f9fa;
+        }
+
+        .attack-records-container::-webkit-scrollbar-thumb { /* 滚动条滑块背景 */
+            background: #6c757d;
+            border-radius: 3px;
+        }
+
+        .attack-records-container::-webkit-scrollbar-thumb:hover { /* 滚动条滑块悬停背景 */
+            background: #495057;
+        }
+        /* 攻击记录滑入动画 */
+        @keyframes slideInRight {
+            from {
+                opacity: 0;                          /* 开始透明 */
+                transform: translateX(30px);         /* 从右侧30px开始 */
+            }
+            to {
+                opacity: 1;                          /* 结束不透明 */
+                transform: translateX(0);            /* 移动到原位置 */
+            }
+        }
+
+        /* ========================================
+           弹窗样式
+           ======================================== */
+        /* 弹窗样式 */
+        .attack-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+            min-width: 350px;
+            max-width: 400px;
+            animation: slideInDown 0.3s ease-out;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: none;
+        }
+
+        .attack-toast .btn-close {
+            padding: 0.5rem;
+        }
+
+        .attack-toast-simple {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+            min-width: 300px;
+            animation: slideInDown 0.3s ease-out;
+        }
+
+        .toast-content {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideOutUp {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+        }
+
+        /* ========================================
+           监控区域样式
+           ======================================== */
+
+        /* 监控区域样式 */
+        .monitor-item {
+            margin-bottom: 15px;
+        }
+        /* 监控信息样式 */
+        .monitor-info {
+            margin-bottom: 8px;
+        }
+        /* 监控名称样式 */
+        .monitor-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--industrial-text);
+        }
+
+        /* 简化的横向滚动节点容器 */
+        .nodes-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            height: 250px; /* 固定高度 */
+        }
+
+        /* 美化滚动条 - 与容器状态一致 */
+        .nodes-container::-webkit-scrollbar {
+            height: 8px;  /* 滚动条高度 */
+        }
+
+        .nodes-container::-webkit-scrollbar-track {
+            background: var(--industrial-dark);
+            border-radius: 4px;
+        }
+
+        .nodes-container::-webkit-scrollbar-thumb {
+            background: var(--industrial-light);
+            border-radius: 4px;
+        }
+
+        .nodes-container::-webkit-scrollbar-thumb:hover {
+            background: var(--industrial-accent);
+        }
+
+        /* 横向节点卡片样式 */
+        .node-card-horizontal {
+            flex: 0 0 350px; /* 固定宽度，不收缩 */
+            background-color: var(--industrial-medium2);
+            border-radius: 6px;
+            padding: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--industrial-border);
+            height: 230px; /* 固定高度 */
+        }
+        /* 横向节点卡片悬停效果 */
+        .node-card-horizontal:hover {
+            transform: translateY(-2px);  /* 向上移动2px */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);  /* 增强阴影效果 */
+        }
+
+        /* 导航按钮样式 */
+        .node-navigation {
+            display: flex;
+            gap: 5px;
+        }
+
+        .node-navigation .btn {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 1200px) {
+            .col-md-2 {
+                flex: 0 0 22%;  /* 20%宽度 */
+                max-width: 30%; /* 最大宽度22% */
+            }
+            
+            .col-md-3 {
+                flex: 0 0 22%;  /* 25%宽度 */
+                max-width: 25%;  /* 最大宽度25% */
+            }
+            
+            .col-md-9 {
+                flex: 0 0 75%;  /* 75%宽度 */
+                max-width: 75%;  /* 最大宽度75% */
+            }
+        }
+
+        /* 攻击统计概览背景样式 */
+        .attack-stats-overview {
+            background-color: var(--industrial-medium);     /* 背景颜色 */
+            border-color: var(--industrial-border);    /* 边框颜色 */
+        }
+
+        /* 亮色主题下的攻击统计概览 */
+        [data-bs-theme="light"] .attack-stats-overview {
+            background-color: var(--industrial-medium2);     /* 背景颜色 */
+            border-color: var(--industrial-border);    /* 边框颜色 */
+        }
+    </style>
+</head>
+<body>
+    <!--
+        页面主体结构
+        使用Bootstrap容器布局，包含头部、产线监控、性能指标、容器状态和节点状态等模块
+    -->
+    <div class="container">
+        <!-- 页面头部区域 -->
+        <div class="header">
+            <h1 class="text-center">支持攻击自恢复的工业智能化弹性调度系统</h1>
+            <p class="text-center">Brics腾飞团队作品</p>
+            <!-- 主题切换按钮 -->
+            <div class="theme-switch-wrapper">
+                <button id="theme-toggle" class="btn btn-sm">
+                    <i id="theme-icon" class="theme-icon"></i>
+                    <span id="theme-text">夜间模式</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 第一行：产线监控和系统状态五列布局 -->
+        <div class="row mb-4">
+            <!-- 产线1监控卡片 -->
+            <div class="col-md-2">
+                <div class="card detection-card">
+                    <div class="card-header">
+                        <h5>产线1</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- 实时图像显示区域 -->
+                        <div class="image-container">
+                            <img id="belt2-image" src="/static/placeholder.jpg" alt="产线2图像">
+                        </div>
+                        <!-- 缺陷检测状态指示器 -->
+                        <div id="belt2-status" class="no-defect">无缺陷</div>
+                        <!-- 缺陷详情列表 -->
+                        <div id="belt2-defects" class="mt-2">
+                            <!-- 这里将显示所有检测到的缺陷 -->
+                        </div>
+                        <!-- 检测详细信息 -->
+                        <div id="belt2-details" class="mt-2">
+                            <p>相机ID: <span id="belt2-camera-id">-</span></p>
+                            <p>检测时间: <span id="belt2-timestamp">-</span></p>
+                            <p>推理模型: <span id="belt2-model">-</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 产线2监控卡片 -->
+            <div class="col-md-2">
+                <div class="card detection-card">
+                    <div class="card-header">
+                        <h5>产线2</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- 实时图像显示区域 -->
+                        <div class="image-container">
+                            <img id="belt1-image" src="/static/placeholder.jpg" alt="产线1图像">
+                        </div>
+                        <!-- 缺陷检测状态指示器 -->
+                        <div id="belt1-status" class="no-defect">无缺陷</div>
+                        <!-- 缺陷详情列表 -->
+                        <div id="belt1-defects" class="mt-2">
+                            <!-- 这里将显示所有检测到的缺陷 -->
+                        </div>
+                        <!-- 检测详细信息 -->
+                        <div id="belt1-details" class="mt-2">
+                            <p>相机ID: <span id="belt1-camera-id">-</span></p>
+                            <p>检测时间: <span id="belt1-timestamp">-</span></p>
+                            <p>推理模型: <span id="belt1-model">-</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 容器状态监控卡片 -->
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5>容器状态</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- 容器状态列表，支持滚动 -->
+                        <div class="container-status">
+                            <!-- 处理器1容器状态 -->
+                            <div class="container-item-full">
+                                <div class="container-info">
+                                    <span class="container-name">实时计算容器 I</span>
+                                    <span id="processor-service-status" class="badge bg-secondary">未知</span>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">节点设备:</span>
+                                    <span id="processor-service-node" class="container-node">-</span>
+                                    <span class="container-label ml-2">运行时间:</span>
+                                    <span id="processor-service-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">接收流量:</span>
+                                    <span id="processor-service-rxnetwork" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">发送流量:</span>
+                                    <span id="processor-service-txnetwork" class="container-uptime">-</span>
+                                </div>
+                            </div>
+                            
+                            <div class="container-item-full">
+                                <div class="container-info">
+                                    <span class="container-name">实时计算容器 II</span>
+                                    <span id="processor-service-2-status" class="badge bg-secondary">未知</span>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">节点设备:</span>
+                                    <span id="processor-service-2-node" class="container-node">-</span>
+                                    <span class="container-label ml-2">运行时间:</span>
+                                    <span id="processor-service-2-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">接收流量:</span>
+                                    <span id="processor-service-2-rxnetwork" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">发送流量:</span>
+                                    <span id="processor-service-2-txnetwork" class="container-uptime">-</span>
+                                    
+                                </div>
+                            </div>
+                            
+                            <div class="container-item-full">
+                                <div class="container-info">
+                                    <span class="container-name">产线感知容器 I</span>
+                                    <span id="image-capture-status" class="badge bg-secondary">未知</span>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">节点设备:</span>
+                                    <span id="image-capture-node" class="container-node">-</span>
+                                    <span class="container-label ml-2">运行时间:</span>
+                                    <span id="image-capture-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">接收流量:</span>
+                                    <span id="image-capture-rxnetwork" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">发送流量:</span>
+                                    <span id="image-capture-txnetwork" class="container-uptime">-</span>
+                                </div>
+                            </div>
+                            
+                            <div class="container-item-full">
+                                <div class="container-info">
+                                    <span class="container-name">产线感知容器 II</span>
+                                    <span id="image-capture-2-status" class="badge bg-secondary">未知</span>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">节点设备:</span>
+                                    <span id="image-capture-2-node" class="container-node">-</span>
+                                    <span class="container-label ml-2">运行时间:</span>
+                                    <span id="image-capture-2-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">接收流量:</span>
+                                    <span id="image-capture-2-rxnetwork" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">发送流量:</span>
+                                    <span id="image-capture-2-txnetwork" class="container-uptime">-</span>
+                                </div>
+                            </div>
+
+                            <div class="container-item-full">
+                                <div class="container-info">
+                                    <span class="container-name">数据库容器</span>
+                                    <span id="redis-status" class="badge bg-secondary">未知</span>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">节点设备:</span>
+                                    <span id="redis-node" class="container-node">-</span>
+                                    <span class="container-label ml-2">运行时间:</span>
+                                    <span id="redis-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">接收流量:</span>
+                                    <span id="redis-rxnetwork" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">发送流量:</span>
+                                    <span id="redis-txnetwork" class="container-uptime">-</span>
+                                </div>
+                            </div>
+
+                            <!-- Web 容器状态 -->
+                            <!-- <div class="container-item-full">
+                                <div class="container-info">
+                                    <span class="container-name">服务器容器</span>
+                                    <span id="ws-video-gateway-status" class="badge bg-secondary">未知</span>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">节点设备:</span>
+                                    <span id="ws-video-gateway-node" class="container-node">-</span>
+                                    <span class="container-label ml-2">运行时间:</span>
+                                    <span id="ws-video-gateway-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">接收流量:</span>
+                                    <span id="ws-video-gateway-rxnetwork" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">发送流量:</span>
+                                    <span id="ws-video-gateway-txnetwork" class="container-uptime">-</span>
+
+                                </div>
+                            </div> -->
+                            
+                            <!-- 系统状态检测容器状态-->
+                            <div class="container-item-full">
+                                <div class="container-info">
+                                    <span class="container-name">状态监控容器</span>
+                                    <span id="prometheus-status" class="badge bg-secondary">未知</span>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">节点设备:</span>
+                                    <span id="prometheus-node" class="container-node">-</span>
+                                    <span class="container-label ml-2">运行时间:</span>
+                                    <span id="prometheus-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">接收流量:</span>
+                                    <span id="prometheus-rxnetwork" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">发送流量:</span>
+                                    <span id="prometheus-txnetwork" class="container-uptime">-</span>
+                                </div>
+                            </div>
+
+                            <!-- 系统外部监控容器状态-->
+                            <!-- <div class="container-item-full">
+                                <div class="container-info">
+                                    <span class="container-name">外部监控容器</span>
+                                    <span id="monitor-client-1-status" class="badge bg-secondary">未知</span>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">节点设备:</span>
+                                    <span id="monitor-client-1-node" class="container-node">-</span>
+                                    <span class="container-label ml-2">运行时间:</span>
+                                    <span id="monitor-client-1-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">接收流量:</span>
+                                    <span id="monitor-client-1-rxnetwork" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">发送流量:</span>
+                                    <span id="monitor-client-1-txnetwork" class="container-uptime">-</span>
+                                </div>
+                            </div> -->
+
+                            <!-- PLC控制器1容器状态-->
+                            <div class="container-item-full">
+                                <div class="container-info">
+                                    <span class="container-name">OT侧控制容器 I</span>
+                                    <span id="control-belt1-v4-status" class="badge bg-secondary">未知</span>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">节点设备:</span>
+                                    <span id="control-belt1-v4-node" class="container-node">-</span>
+                                    <span class="container-label ml-2">运行时间:</span>
+                                    <span id="control-belt1-v4-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">接收流量:</span>
+                                    <span id="control-belt1-v4-rxnetwork" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">发送流量:</span>
+                                    <span id="control-belt1-v4-txnetwork" class="container-uptime">-</span>
+                                </div>
+                            </div>
+                            
+                            <!-- PLC控制器2容器状态-->
+                            <div class="container-item-full">
+                                <div class="container-info">
+                                    <span class="container-name">OT侧控制容器 II</span>
+                                    <span id="control-belt2-v4-status" class="badge bg-secondary">未知</span>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">节点设备:</span>
+                                    <span id="control-belt2-v4-node" class="container-node">-</span>
+                                    <span class="container-label ml-2">运行时间:</span>
+                                    <span id="control-belt2-v4-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">接收流量:</span>
+                                    <span id="control-belt2-v4-rxnetwork" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">发送流量:</span>
+                                    <span id="control-belt2-v4-txnetwork" class="container-uptime">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 系统攻击检测卡片 -->
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="fas fa-shield-alt me-2"></i>攻击检测
+                        </h5>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-secondary" onclick="clearAttackRecords()">
+                                <i class="fas fa-trash"></i> 清空记录
+                            </button>
+                            <span id="attack-status-indicator" class="badge bg-success">系统安全</span>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <!-- 攻击统计概览 -->
+                        <div class="p-3 border-bottom attack-stats-overview">  
+                            <div class="row text-center">
+                                <div class="col-3">
+                                    <div class="text-danger fw-bold" id="critical-count">0</div>
+                                    <small class="text">严重攻击</small>
+                                </div>
+                                <div class="col-3">
+                                    <div class="text-warning fw-bold" id="warning-count">0</div>
+                                    <small class="text">警告攻击</small>
+                                </div>
+                                <div class="col-3">
+                                    <div class="text-info fw-bold" id="performance-count">0</div>
+                                    <small class="text">普通攻击</small>
+                                </div>
+                                <div class="col-3">
+                                    <div class="text-success fw-bold" id="recovery-count">0</div>
+                                    <small class="text">成功恢复</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 攻击记录列表 -->
+                        <div class="attack-records-container" style="height: 420px; overflow-y: auto;">
+                            <div id="attack-records" class="p-2">
+                                <div class="text-center text-muted py-4">
+                                    <i class="fas fa-shield-check fa-2x mb-2"></i>
+                                    <div>暂无攻击记录</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第二行：产线状态监控和系统节点状态 -->
+        <!-- 产线检测性能监控卡片 -->
+        <!-- <div class="col-md-2">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5>产线检测性能</h5>
+                </div>
+                <div class="card-body">
+
+                    <div class="container-item-full">
+                        <div class="container-info">
+                            <span class="container-name">产线1性能</span>
+                        </div>
+                        <div class="performance-metrics">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="performance-value" id="belt2-fps">0.0</div>
+                                    <div class="performance-label">FPS</div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="performance-value" id="belt2-processing-time">0.0</div>
+                                    <div class="performance-label">推理时间 (ms)</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="belt2Chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-item-full">
+                        <div class="container-info">
+                            <span class="container-name">产线2性能</span>
+                        </div>
+                        <div class="performance-metrics">
+                            <div class="row">
+              
+                                <div class="col-6">
+                                    <div class="performance-value" id="belt1-fps">0.0</div>
+                                    <div class="performance-label">FPS</div>
+                                </div>
+                                
+                                <div class="col-6">
+                                    <div class="performance-value" id="belt1-processing-time">0.0</div>
+                                    <div class="performance-label">推理时间 (ms)</div>
+                                </div>
+                            </div>
+                       
+                            <div class="chart-container">
+                                <canvas id="fpsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="row mb-4">
+            <!-- 产线状态监控卡片 -->
+             
+            <div class="col-md-5">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5>产线状态监控</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- 横向排列的监控区域 -->
+                        <div class="row">
+                            <!-- 分拣区域监控 -->
+                            <div class="col-6">
+                                <div class="container-item-full">
+                                    <div class="container-info">
+                                        <span class="container-name">产线1性能</span>
+                                    </div>
+                                    <div class="performance-metrics">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="performance-value" id="belt2-fps">0.0</div>
+                                                <div class="performance-label">FPS</div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="performance-value" id="belt2-processing-time">0.0</div>
+                                                <div class="performance-label">推理时间 (ms)</div>
+                                            </div>
+                                        </div>
+                                        <div class="chart-container">
+                                            <canvas id="belt2Chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 全景监控 -->
+                            <div class="col-6">
+                                <div class="container-item-full">
+                                    <div class="container-info">
+                                        <span class="container-name">产线2性能</span>
+                                    </div>
+                                    <div class="performance-metrics">
+                                        <div class="row">
+                                            <!-- FPS显示 -->
+                                            <div class="col-6">
+                                                <div class="performance-value" id="belt1-fps">0.0</div>
+                                                <div class="performance-label">FPS</div>
+                                            </div>
+                                            <!-- 推理时间显示 -->
+                                            <div class="col-6">
+                                                <div class="performance-value" id="belt1-processing-time">0.0</div>
+                                                <div class="performance-label">推理时间 (ms)</div>
+                                            </div>
+                                        </div>
+                                        <!-- 产线1性能图表 -->
+                                        <div class="chart-container">
+                                            <canvas id="fpsChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 系统节点状态监控卡片 -->
+            <div class="col-md-7">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5>系统节点状态</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="nodes-container">
+                            <!-- 树莓派5节点1 (k8s-node-rp5-1) -->
+                            <!-- <div class="node-card-horizontal" id="node-rp5-1">
+                               
+                                <div class="node-header">
+                                    <span class="node-name">Raspberry Pi 5 I</span>
+                                    <span class="node-status ready">就绪</span>
+                                </div>
+                            
+                                <div class="node-metrics">
+                               
+                                    <div class="node-metric">
+                                        <div class="node-metric-label">CPU</div>
+                                        <div class="node-metric-value"><span id="node-rp5-1-cpu">0</span>%</div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-cpu" id="node-rp5-1-cpu-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                             
+                                    <div class="node-metric">
+                                        <div class="node-metric-label">内存</div>
+                                        <div class="node-metric-value"><span id="node-rp5-1-memory">0</span>%</div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-memory" id="node-rp5-1-memory-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                          
+                                <div class="container-details">
+                                    <span class="container-label">运行时间:</span>
+                                    <span id="node-rp5-1-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">设备架构:</span>
+                                    <span id="node-rp5-1-architecture" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">操作系统:</span>
+                                    <span id="node-rp5-1-os-image" class="container-uptime">-</span>
+                                </div>
+                            </div> -->
+
+                            <!-- k8s-node-phytium -->
+                            <div class="node-card-horizontal" id="node-phytium">
+                                <div class="node-header">
+                                    <span class="node-name">Raspberry Pi 5 II</span>
+                                    <span class="node-status ready">就绪</span>
+                                </div>
+                                <div class="node-metrics">
+                                    <div class="node-metric">
+                                        <div class="node-metric-label">CPU</div>
+                                        <div class="node-metric-value"><span id="node-phytium-cpu">0</span>%</div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-cpu" id="node-phytium-cpu-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="node-metric">
+                                        <div class="node-metric-label">内存</div>
+                                        <div class="node-metric-value"><span id="node-phytium-memory">0</span>%</div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-memory" id="node-phytium-memory-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">运行时间:</span>
+                                    <span id="node-phytium-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">设备架构:</span>
+                                    <span id="node-phytium-architecture" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">操作系统:</span>
+                                    <span id="node-phytium-os-image" class="container-uptime">-</span>
+                                </div>
+                            </div>
+                            
+                            <!-- k8s-node-rp5-2 -->
+                            <div class="node-card-horizontal" id="node-rpi52">
+                                <div class="node-header">
+                                    <span class="node-name">Raspberry Pi 5 III</span>
+                                    <span class="node-status ready">就绪</span>
+                                </div>
+                                <div class="node-metrics">
+                                    <div class="node-metric">
+                                        <div class="node-metric-label">CPU</div>
+                                        <div class="node-metric-value"><span id="node-rpi5-2-cpu">0</span>%</div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-cpu" id="node-rpi5-2-cpu-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="node-metric">
+                                        <div class="node-metric-label">内存</div>
+                                        <div class="node-metric-value"><span id="node-rpi5-2-memory">0</span>%</div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-memory" id="node-rpi5-2-memory-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">运行时间:</span>
+                                    <span id="node-rpi5-2-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">设备架构:</span>
+                                    <span id="node-rpi5-2-architecture" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">操作系统:</span>
+                                    <span id="node-rpi5-2-os-image" class="container-uptime">-</span>
+                                </div>
+                            </div>
+                            
+                            <!-- k8s-node-ec3 -->
+                            <div class="node-card-horizontal" id="node-ec3">
+                                <div class="node-header">
+                                    <span class="node-name">Q6AMV-B-1A</span>
+                                    <span class="node-status ready">就绪</span>
+                                </div>
+                                <div class="node-metrics">
+                                    <div class="node-metric">
+                                        <div class="node-metric-label">CPU</div>
+                                        <div class="node-metric-value"><span id="node-ec3-cpu">0</span>%</div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-cpu" id="node-ec3-cpu-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="node-metric">
+                                        <div class="node-metric-label">内存</div>
+                                        <div class="node-metric-value"><span id="node-ec3-memory">0</span>%</div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-memory" id="node-ec3-memory-bar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container-details">
+                                    <span class="container-label">运行时间:</span>
+                                    <span id="node-ec3-uptime" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">设备架构:</span>
+                                    <span id="node-ec3-architecture" class="container-uptime">-</span>
+                                    <span class="container-label ml-2">操作系统:</span>
+                                    <span id="node-ec3-os-image" class="container-uptime">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        /* ========================================
+           JavaScript 主要功能模块
+           ======================================== */
+
+        // 全局变量声明
+        let fpsChart, belt2Chart;         // 图表对象
+        let ws1, ws2, wsContainer, wsNodes, wsPods, wsMonitor1, wsMonitor2; // WebSocket连接对象
+        // 攻击检测相关变量
+        let attackSocket = null;
+        let attackRecords = [];
+        let attackStats = {
+            critical: 0,
+            warning: 0,
+            performance: 0,
+            success: 0
+        };
+        const nodeMapping = {"phytium-desktop": "Raspberry Pi 5 II",
+                                "k8s-node-rp5-1": "Raspberry Pi 5 I",
+                                "k8s-node-rpi5-2": "Raspberry Pi 5 III",
+                                "ec3": "Q6AMV-B-1A"}; // 节点名称映射
+
+        /**
+         * 初始化所有WebSocket连接
+         * 建立与后端的实时数据通信通道
+         */
+        function initWebSockets() {
+            // 产线1数据WebSocket连接
+            ws1 = new WebSocket(`ws://${window.location.host}/ws/video1`);
+            ws1.onopen = () => console.log("WebSocket 1 连接已建立");
+            ws1.onerror = (error) => console.error("WebSocket 1 错误:", error);
+            ws1.onclose = () => {
+                console.log("WebSocket 1 连接已关闭，5秒后重连");
+                setTimeout(initWebSockets, 5000);
+            };
+            ws1.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                updateBelt1Data(data);
+            };
+
+            // 产线2数据WebSocket连接
+            ws2 = new WebSocket(`ws://${window.location.host}/ws/video2`);
+            ws2.onopen = () => console.log("WebSocket 2 连接已建立");
+            ws2.onerror = (error) => console.error("WebSocket 2 错误:", error);
+            ws2.onclose = () => {
+                console.log("WebSocket 2 连接已关闭");
+            };
+            ws2.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                updateBelt2Data(data);
+            };
+
+            // 分拣区域监控WebSocket连接
+            wsMonitor1 = new WebSocket(`ws://${window.location.host}/ws/monitor1`);
+            wsMonitor1.onopen = () => console.log("分拣区域监控 WebSocket 连接已建立");
+            wsMonitor1.onerror = (error) => console.error("分拣区域监控 WebSocket 错误:", error);
+            wsMonitor1.onclose = () => {
+                console.log("分拣区域监控 WebSocket 连接已关闭");
+            };
+            wsMonitor1.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                updateImage('monitor-usb-1-image', data.frame_data);
+            };
+
+            // 全景监控WebSocket连接
+            wsMonitor2 = new WebSocket(`ws://${window.location.host}/ws/monitor2`);
+            wsMonitor2.onopen = () => console.log("全景监控 WebSocket 连接已建立");
+            wsMonitor2.onerror = (error) => console.error("全景监控 WebSocket 错误:", error);
+            wsMonitor2.onclose = () => {
+                console.log("全景监控 WebSocket 连接已关闭");
+            };
+            wsMonitor2.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                updateImage('monitor-usb-2-image', data.frame_data);
+            };
+
+            // K8s节点信息WebSocket连接
+            wsNodes = new WebSocket(`ws://${window.location.host}/ws/nodes`);
+            wsNodes.onopen = () => console.log("K8s节点信息 WebSocket 连接已建立");
+            wsNodes.onerror = (error) => console.error("K8s节点信息 WebSocket 错误:", error);
+            wsNodes.onclose = () => {
+                console.log("K8s节点信息 WebSocket 连接已关闭");
+                // 不重复重连，因为ws1的重连会同时重连所有WebSocket
+            };
+            wsNodes.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                updateNodesInfo(data); // 更新K8s节点信息显示
+            };
+
+            // K8s Pod信息WebSocket连接
+            wsPods = new WebSocket(`ws://${window.location.host}/ws/pods`);
+            wsPods.onopen = () => console.log("K8s Pod信息 WebSocket 连接已建立");
+            wsPods.onerror = (error) => console.error("K8s Pod信息 WebSocket 错误:", error);
+            wsPods.onclose = () => {
+                console.log("K8s Pod信息 WebSocket 连接已关闭");
+                // 不重复重连，因为ws1的重连会同时重连所有WebSocket
+            };
+            wsPods.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                updatePodsInfo(data); // 更新K8s Pod信息显示
+            };
+            
+            // 攻击检测WebSocket连接
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            attackSocket = new WebSocket(`${protocol}//${window.location.host}/ws/attack`);
+            attackSocket.onopen = () => console.log('攻击检测WebSocket连接已建立');
+            attackSocket.onerror = (error) => console.error('攻击检测WebSocket错误:', error);
+            attackSocket.onclose = () => {
+                console.log('攻击检测WebSocket连接已关闭');
+            };
+            attackSocket.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+                if (message.type === 'attack_detected') {
+                    handleAttackDetected(message.data);
+                }
+            };
+        }
+        /**
+         * 页面加载完成后的初始化函数
+         * 按顺序初始化各个组件
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();        // 初始化图表组件
+            initThemeToggle();   // 初始化主题切换功能
+            initWebSockets();    // 初始化WebSocket连接
+            // 初始化攻击检测WebSocket
+            initAttackWebSocket();
+            // 渲染初始状态
+            renderAttackRecords();
+            updateAttackStats();
+        });
+
+        /**
+         * 初始化所有图表组件
+         * 创建Chart.js图表实例用于显示性能数据
+         */
+        function initCharts() {
+            // 产线1推理时间图表配置
+            const fpsCtx = document.getElementById('fpsChart').getContext('2d');
+            fpsChart = new Chart(fpsCtx, {
+                type: 'line',                              // 线性图表
+                data: {
+                    labels: [],                            // X轴标签（时间）
+                    datasets: [{
+                        label: '推理时间 (ms)',             // 数据集标签
+                        data: [],                          // 数据点
+                        borderColor: '#20c997',            // 线条颜色（绿色）
+                        backgroundColor: 'rgba(32, 201, 151, 0.1)', // 填充颜色
+                        borderWidth: 2,                    // 线条宽度
+                        tension: 0.3,                      // 线条平滑度
+                        fill: true                         // 填充区域
+                    }]
+                },
+                options: {
+                    responsive: true,                      // 响应式
+                    maintainAspectRatio: false,            // 不保持宽高比
+                    scales: {
+                        y: {                               // Y轴配置
+                            beginAtZero: true,             // 从0开始
+                            max: 250,                      // 最大值250ms
+                            ticks: {
+                                stepSize: 50,              // 刻度间隔50ms
+                                color: 'rgba(236, 240, 241, 0.7)', // 刻度颜色
+                                font: { size: 10 }         // 字体大小
+                            },
+                            grid: {
+                                color: 'rgba(236, 240, 241, 0.1)' // 网格线颜色
+                            }
+                        },
+                        x: {
+                            display: false                 // 隐藏X轴
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }         // 隐藏图例
+                    },
+                    elements: {
+                        point: {
+                            radius: 2,                     // 数据点半径
+                            hoverRadius: 4                 // 悬停时半径
+                        },
+                        line: {
+                            borderWidth: 2                 // 线条宽度
+                        }
+                    }
+                }
+            });
+            
+            // 产线2推理时间图表
+            const belt2Ctx = document.getElementById('belt2Chart').getContext('2d');
+            belt2Chart = new Chart(belt2Ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: '推理时间 (ms)',
+                        data: [],
+                        borderColor: '#fd7e14',
+                        backgroundColor: 'rgba(253, 126, 20, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 250,
+                            ticks: {
+                                stepSize: 50,
+                                color: 'rgba(236, 240, 241, 0.7)',
+                                font: {
+                                    size: 10
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(236, 240, 241, 0.1)'
+                            }
+                        },
+                        x: {
+                            display: false
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    elements: {
+                        point: {
+                            radius: 2,
+                            hoverRadius: 4
+                        },
+                        line: {
+                            borderWidth: 2
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * 更新图表数据
+         * @param {Chart} chart - Chart.js图表实例
+         * @param {string} label - X轴标签（通常是时间）
+         * @param {number} value - Y轴数值
+         */
+        function updateChart(chart, label, value) {
+            if (!chart || !chart.data) {
+                console.error('图表未初始化:', chart);
+                return;
+            }
+
+            // console.log(`更新图表数据: ${label}, ${value}`);
+
+            const maxDataPoints = 20; // 最大数据点数量，保持图表性能
+
+            // 如果数据点超过最大值，移除最旧的数据点
+            if (chart.data.labels.length >= maxDataPoints) {
+                chart.data.labels.shift();
+                chart.data.datasets[0].data.shift();
+            }
+
+            // 添加新的数据点
+            chart.data.labels.push(label);
+            chart.data.datasets[0].data.push(value);
+            chart.update('none'); // 使用 'none' 模式更新，减少动画开销
+        }
+
+        /**
+         * 格式化时间戳为本地时间字符串
+         * @param {string|number} timestamp - 时间戳
+         * @returns {string} 格式化后的时间字符串
+         */
+        function formatTimestamp(timestamp) {
+            if (!timestamp) return '-';
+            const date = new Date(timestamp);
+            //return date.toLocaleTimeString();
+            return date.toLocaleTimeString('zh-CN', { timeZone: 'Asia/Shanghai' });
+        }
+
+        /**
+         * 格式化运行时间（秒）为可读的时间字符串
+         * @param {number} seconds - 运行时间（秒）
+         * @returns {string} 格式化后的运行时间字符串
+         */
+        function formatUptime(seconds) {
+            if (!seconds || seconds <= 0) return '-';
+
+            const days = Math.floor(seconds / 86400);      // 计算天数
+            const hours = Math.floor((seconds % 86400) / 3600); // 计算小时数
+            const minutes = Math.floor((seconds % 3600) / 60);  // 计算分钟数
+
+            let result = '';
+            if (days > 0) result += `${days}天 `;
+            if (hours > 0 || days > 0) result += `${hours}小时 `;
+            result += `${minutes}分钟`;
+
+            return result;
+        }
+
+        /**
+         * 更新容器状态显示
+         * @param {string} elementId - 状态元素的ID
+         * @param {string} status - 容器状态（running/stopped等）
+         * @param {string} nodeName - 节点名称
+         * @param {number} uptime - 运行时间（秒）
+         */
+        function updateContainerStatus(elementId, status, nodeName, uptime) {
+            const element = document.getElementById(elementId);
+            const nodeElement = document.getElementById(elementId.replace('-status', '-node'));
+            const uptimeElement = document.getElementById(elementId.replace('-status', '-uptime'));
+
+            if (!element) return;
+
+            // 根据状态设置显示文本和样式
+            let statusText = '未知';
+            let statusClass = 'badge bg-secondary';
+
+            if (status === 'running') {
+                statusText = '运行中';
+                statusClass = 'badge bg-success';
+            } else if (status === 'stopped') {
+                statusText = '已停止';
+                statusClass = 'badge bg-danger';
+            }
+
+            // 更新状态显示
+            element.textContent = statusText;
+            element.className = statusClass;
+
+            // 更新节点名称
+            if (nodeElement && nodeName) {
+                nodeElement.textContent = nodeName;
+            }
+            
+            if (uptimeElement && uptime) {
+                uptimeElement.textContent = formatUptime(uptime);
+            }
+        }
+        
+        // 优化图像加载
+        function updateImage(elementId, imageData) {
+            const imgElement = document.getElementById(elementId);
+            if (!imgElement) return;
+            
+            if (imageData) {
+                // 创建一个新的Image对象来预加载图像
+                const newImg = new Image();
+                newImg.onload = function() {
+                    // 图像加载完成后更新DOM
+                    imgElement.src = this.src;
+                    imgElement.classList.add('loaded');
+                };
+                newImg.src = `data:image/jpeg;base64,${imageData}`;
+            } else {
+                imgElement.src = '/static/placeholder.jpg';
+                imgElement.classList.remove('loaded');
+            }
+        }
+        
+        // 更新产线1数据
+        function updateBelt1Data(data) {
+            // 更新图像
+            updateImage('belt1-image', data.image);
+            
+            // 更新检测结果
+            const detections = data.detections || [];
+            if (detections.length > 0) {
+                document.getElementById('belt1-status').className = 'defect-alert';
+                document.getElementById('belt1-status').textContent = `检测到 ${detections.length} 个缺陷`;
+                
+                // 显示所有缺陷
+                const defectsHtml = detections.map((det, index) => {
+                    return `<div class="defect-item">
+                                <span class="defect-number">${index + 1}.</span>
+                                <span class="defect-class">${det.class || 'unknown'}</span>
+                                <span class="defect-confidence">(${(det.confidence * 100).toFixed(1)}%)</span>
+                            </div>`;
+                }).join('');
+                
+                document.getElementById('belt1-defects').innerHTML = defectsHtml;
+            } else {
+                document.getElementById('belt1-status').className = 'no-defect';
+                document.getElementById('belt1-status').textContent = '无缺陷';
+                document.getElementById('belt1-defects').innerHTML = '';
+            }
+            
+            // 更新其他信息
+            document.getElementById('belt1-camera-id').textContent = data.camera_id || '-';
+            document.getElementById('belt1-timestamp').textContent = formatTimestamp(data.create_timestamp);
+            document.getElementById('belt1-model').textContent = data.perf_info?.model_name || '-';
+            
+            // 更新性能指标
+            if (data.perf_info) {
+                const timeLabel = formatTimestamp(data.create_timestamp);
+                const inferenceTime = data.perf_info.total_time * 1000 || 0;
+                const fps = data.perf_info.fps || 0;
+                updateChart(fpsChart, timeLabel, inferenceTime);
+                document.getElementById('belt1-fps').textContent = fps.toFixed(1);
+                document.getElementById('belt1-processing-time').textContent = inferenceTime.toFixed(1);
+            }
+        }
+
+        // 更新产线2数据
+        function updateBelt2Data(data) {
+            // 更新图像
+            updateImage('belt2-image', data.image);
+            
+            // 更新检测结果
+            const detections = data.detections || [];
+            if (detections.length > 0) {
+                document.getElementById('belt2-status').className = 'defect-alert';
+                document.getElementById('belt2-status').textContent = `检测到 ${detections.length} 个缺陷`;
+                
+                // 显示所有缺陷
+                const defectsHtml = detections.map((det, index) => {
+                    return `<div class="defect-item">
+                                <span class="defect-number">${index + 1}.</span>
+                                <span class="defect-class">${det.class || 'unknown'}</span>
+                                <span class="defect-confidence">(${(det.confidence * 100).toFixed(1)}%)</span>
+                            </div>`;
+                }).join('');
+                
+                document.getElementById('belt2-defects').innerHTML = defectsHtml;
+            } else {
+                document.getElementById('belt2-status').className = 'no-defect';
+                document.getElementById('belt2-status').textContent = '无缺陷';
+                document.getElementById('belt2-defects').innerHTML = '';
+            }
+            
+            // 更新其他信息
+            document.getElementById('belt2-camera-id').textContent = data.camera_id || '-';
+            document.getElementById('belt2-timestamp').textContent = formatTimestamp(data.create_timestamp);
+            document.getElementById('belt2-model').textContent = data.perf_info?.model_name || '-';
+            
+            // 更新性能指标
+            if (data.perf_info) {
+                const timeLabel = formatTimestamp(data.create_timestamp);
+                const inferenceTime = data.perf_info.total_time * 1000 || 0;
+                const fps = data.perf_info.fps || 0;
+                updateChart(belt2Chart, timeLabel, inferenceTime);
+                document.getElementById('belt2-fps').textContent = fps.toFixed(1);
+                document.getElementById('belt2-processing-time').textContent = inferenceTime.toFixed(1);
+            }
+        }
+        
+        // 更新K8s节点信息
+        function updateNodesInfo(data) {
+            if (!data || !data.nodes) return;
+            //我想改变遍历的方式为直接遍历data.nodes中的pod_name名，然后更新每一个node的信息
+            // console.log("节点信息:", data.nodes);
+
+
+            Object.keys(data.nodes).forEach(node_name => {
+                const nodeData = data.nodes[node_name];
+                if (!nodeData) return;
+
+                let nodeId = node_name;
+                if (node_name.startsWith('k8s-node-')) {
+                    nodeId = node_name.replace('k8s-node-', '');
+                } else if (node_name.endsWith('-desktop')) {
+                    nodeId = node_name.replace('-desktop', '');
+                }
+                // 更新节点状态
+                const statusElement = document.querySelector(`#node-${nodeId} .node-status`);
+                if (statusElement) {
+                    if (nodeData.status === 'Ready') {
+                        statusElement.textContent = '就绪';
+                        statusElement.className = 'node-status ready';
+                    } else {
+                        statusElement.textContent = '未就绪';
+                        statusElement.className = 'node-status not-ready';
+                    }
+                }
+                
+                // 更新CPU和内存使用率
+                const cpuElement = document.getElementById(`node-${nodeId}-cpu`);  //显示 CPU 百分比的文本元素（如 <span id="node-rp5-1-cpu">25.5</span>）
+                const cpuBarElement = document.getElementById(`node-${nodeId}-cpu-bar`);  //显示 CPU 使用率的进度条（如 <div id="node-rp5-1-cpu-bar" style="width: 25.5%">）
+                const memoryElement = document.getElementById(`node-${nodeId}-memory`);
+                const memoryBarElement = document.getElementById(`node-${nodeId}-memory-bar`);
+                const uptimeElement = document.getElementById(`node-${nodeId}-uptime`);
+                const networkElemet = document.getElementById(`node-${nodeId}-network`);
+                const kernelVersionElement = document.getElementById(`node-${nodeId}-kernel-version`);
+                const osImageElement = document.getElementById(`node-${nodeId}-os-image`);
+                const architectureElement = document.getElementById(`node-${nodeId}-architecture`);
+                
+                if (cpuElement && cpuBarElement) {
+                    let cpuPercent = nodeData.cpu_percent || 0;  //没有则默认0
+                    cpuElement.textContent = cpuPercent.toFixed(1); //显示百分比。如25%
+                    cpuBarElement.style.width = `${cpuPercent}%`;  //更新进度条宽度
+                }
+                
+                if (memoryElement && memoryBarElement) {
+                    // 修正：使用正确的字段名
+                    const memoryPercent = nodeData.memory_percent || 0;
+                    memoryElement.textContent = memoryPercent.toFixed(1);
+                    memoryBarElement.style.width = `${memoryPercent}%`;
+                }
+                
+                if (uptimeElement && nodeData.uptime) {
+                    uptimeElement.textContent = nodeData.uptime || '-';
+                }
+                if (networkElemet && nodeData.network_usage) {
+                    networkElemet.textContent = nodeData.network_usage || '-';
+                }
+                if (kernelVersionElement && nodeData.kernel_version) {
+                    kernelVersionElement.textContent = nodeData.kernel_version || '-';
+                }
+                if (osImageElement && nodeData.os_image) {
+                    osImageElement.textContent = nodeData.os_image || '-';
+                }
+                if (architectureElement && nodeData.architecture) {
+                    architectureElement.textContent = nodeData.architecture || '-';
+                }
+            });
+        }
+
+        // 更新K8s Pod信息
+        function updatePodsInfo(data) {
+            if (!data || !data.pods) return;
+            
+            // console.log("Pod信息:", data.pods);
+                    
+            Object.keys(data.pods).forEach(podKey => {
+                const podData = data.pods[podKey];
+                if (!podData) return;
+                
+                let podId = podKey;
+                if (podKey.includes('-')) {
+                    podId = podKey.split('-').slice(0, -2).join('-');
+                }
+                
+                // console.log(`更新Pod ${podId} 状态:`, podData);
+                // 更新容器状态元素
+                const statusElement = document.getElementById(`${podId}-status`);
+                const nodeElement = document.getElementById(`${podId}-node`);
+                const uptimeElement = document.getElementById(`${podId}-uptime`);
+                const rxnetworkElement = document.getElementById(`${podId}-rxnetwork`);
+                const txnetworkElement = document.getElementById(`${podId}-txnetwork`);
+                
+                if (statusElement) {
+                    // 根据Pod状态设置容器状态显示
+                    let statusText = '未知';
+                    let statusClass = 'badge bg-secondary';
+                    
+                    if (podData.status === 'Running') {
+                        statusText = '运行中';
+                        statusClass = 'badge bg-success';
+                    }  else if (podData.status === 'Failed' || podData.status === 'CrashLoopBackOff') {
+                        statusText = '已停止';
+                        statusClass = 'badge bg-danger';
+                    } 
+                    
+                    statusElement.textContent = statusText;
+                    statusElement.className = statusClass;
+                }
+                
+                // 更新节点信息
+                if (nodeElement && podData.node) {
+                    nodeElement.textContent = nodeMapping[podData.node] || '-';
+                }
+                
+                // 更新运行时间
+                if (uptimeElement && podData.uptime) {
+                    uptimeElement.textContent = podData.uptime || '-';
+                }
+
+                // 更新网络流量
+                if (rxnetworkElement && txnetworkElement && podData.network_rx_rate && podData.network_tx_rate) {   
+                    rxnetworkElement.textContent = podData.network_rx_rate || '-';
+                    txnetworkElement.textContent = podData.network_tx_rate || '-';
+                }
+                
+                // console.log(`更新容器 ${podId}: 状态=${podData.status}, 节点=${podData.node}, 运行时间=${podData.uptime}, 网络流量=${podData.network_rx_rate}, ${podData.network_tx_rate}`);
+            });
+        }
+
+        // 处理攻击检测
+        function handleAttackDetected(data) {
+            console.log('收到攻击检测数据:', data);
+            
+            // 添加到记录列表
+            addAttackRecord(data);
+            
+            // 显示弹窗提示
+            console.log('准备显示弹窗...');
+            showAttackToast(data);
+            
+            // 更新统计
+            updateAttackStats();
+            
+            // 更新状态指示器
+            updateAttackStatusIndicator(data);
+        }
+
+        // 添加攻击记录
+        function addAttackRecord(data) {
+            // 添加到记录数组开头
+            attackRecords.unshift(data);
+            
+            // 限制记录数量（最多20条）
+            if (attackRecords.length > 20) {
+                attackRecords = attackRecords.slice(0, 20);
+            }
+            
+            // 更新显示
+            renderAttackRecords();
+        }
+
+        // 渲染攻击记录
+        function renderAttackRecords() {
+            const container = document.getElementById('attack-records');
+            
+            if (attackRecords.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-shield-check fa-2x mb-2"></i>
+                        <div>暂无攻击记录</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            const recordsHtml = attackRecords.map(record => {      //遍历攻击记录数组，生成HTML代码
+                const severityClass = record.severity;
+                const icon = getSeverityIcon(record.severity);
+                // serverityClass严重程度css类名 icon图标 time时间
+                return `
+                    <div class="attack-record-item ${severityClass}">    
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center mb-1">
+                                    <i class="${icon} me-2"></i>
+                                    <strong class="text">${record.attack_type}</strong>
+                                </div>
+                                <div class="text small">
+                                    <i class="fas fa-server me-1"></i>详细信息: ${record.node_name}
+                                </div>
+                                <div class="text small">
+                                    <i class="fas fa-clock me-1"></i>时间: ${record.timestamp}
+                                </div>
+                            </div>
+                            <span class="badge bg-${getSeverityColor(record.severity)}">${record.status}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = recordsHtml;
+        }
+
+        // 获取严重程度图标
+        function getSeverityIcon(severity) {
+            const icons = {
+                critical: 'fas fa-exclamation-triangle text-danger',
+                warning: 'fas fa-exclamation-circle text-warning',
+                performance: 'fas fa-tachometer-alt text-info',
+                success: 'fas fa-check-circle text-success'
+            };
+            return icons[severity] || 'fas fa-question-circle';
+        }
+
+        // 获取严重程度颜色
+        function getSeverityColor(severity) {
+            const colors = {
+                critical: 'danger',
+                warning: 'warning',
+                performance: 'info',
+                success: 'success'
+            };
+            return colors[severity] || 'secondary';
+        }
+
+        // 显示攻击提示弹窗
+        function showAttackToast(data) {
+            console.log('showAttackToast被调用:', data);
+            
+            const toastId = 'toast-' + Date.now();
+            const severityColor = getSeverityColor(data.severity);
+            
+            const toastHtml = `
+                <div id="${toastId}" class="attack-toast-simple">
+                    <div class="toast-content bg-${severityColor} text-white p-3 rounded">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <strong>🚨 ${data.attack_type}</strong><br>
+                                <small>节点: ${data.node_name}</small><br>
+                                <small>时间: ${data.timestamp}</small>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-light" onclick="closeToast('${toastId}')">×</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', toastHtml);
+            console.log('弹窗HTML已添加到页面');
+            
+            // 5秒后自动关闭
+            setTimeout(() => {
+                closeToast(toastId);
+            }, 5000);
+        }
+
+        // 关闭弹窗
+        function closeToast(toastId) {
+            console.log('关闭弹窗:', toastId);
+            const toast = document.getElementById(toastId);
+            if (toast) {
+                toast.style.animation = 'slideOutUp 0.3s ease-in';
+                setTimeout(() => {
+                    toast.remove();
+                    console.log('弹窗已移除');
+                }, 300);
+            }
+        }
+
+        // 更新攻击统计
+        function updateAttackStats() {
+            attackStats = {
+                critical: 0,
+                warning: 0,
+                performance: 0,
+                success: 0
+            };
+            
+            attackRecords.forEach(record => {
+                if (attackStats.hasOwnProperty(record.severity)) {
+                    attackStats[record.severity]++;
+                }
+            });
+            
+            document.getElementById('critical-count').textContent = attackStats.critical;
+            document.getElementById('warning-count').textContent = attackStats.warning;
+            document.getElementById('performance-count').textContent = attackStats.performance;
+            document.getElementById('recovery-count').textContent = attackStats.success;
+        }
+
+        // 更新攻击状态指示器
+        function updateAttackStatusIndicator(data) {
+            const indicator = document.getElementById('attack-status-indicator');
+            
+            if (data.severity === 'success') {
+                indicator.className = 'badge bg-success';
+                indicator.textContent = '系统安全';
+            } else if (data.severity === 'critical') {
+                indicator.className = 'badge bg-danger';
+                indicator.textContent = '严重威胁';
+            } else if (data.severity === 'warning') {
+                indicator.className = 'badge bg-warning';
+                indicator.textContent = '安全警告';
+            } else if (data.severity === 'performance') {
+                indicator.className = 'badge bg-info';
+                indicator.textContent = '进程异常';
+            }
+        }
+
+        // 清空攻击记录
+        function clearAttackRecords() {
+            if (confirm('确定要清空所有攻击记录吗？')) {
+                attackRecords = [];
+                renderAttackRecords();
+                updateAttackStats();
+                
+                const indicator = document.getElementById('attack-status-indicator');
+                indicator.className = 'badge bg-success';
+                indicator.textContent = '系统安全';
+            }
+        }
+
+
+        /**
+         * 初始化主题切换功能
+         * 设置暗色/亮色主题切换，并支持本地存储记忆用户偏好
+         */
+        function initThemeToggle() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeText = document.getElementById('theme-text');
+            const htmlElement = document.documentElement;
+
+            // 主题切换按钮点击事件处理
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-bs-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                // 应用新主题到HTML根元素
+                htmlElement.setAttribute('data-bs-theme', newTheme);
+
+                // 更新按钮显示文本
+                if (newTheme === 'dark') {
+                    themeText.textContent = '夜间模式';
+                } else {
+                    themeText.textContent = '高亮模式';
+                }
+
+                // 保存主题设置到浏览器本地存储
+                localStorage.setItem('theme', newTheme);
+            });
+
+            // 页面加载时从本地存储恢复主题设置
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                htmlElement.setAttribute('data-bs-theme', savedTheme);
+                if (savedTheme === 'light') {
+                    themeText.textContent = '高亮模式';
+                } else {
+                    themeText.textContent = '夜间模式';
+                }
+            }
+        }
+        /* ========================================
+           脚本结束
+           ======================================== */
+    </script>
+</body>
+</html>
+<!--
+    文件结束
+    工业智能化弹性调度系统仪表板页面
+    包含完整的前端界面、样式定义和JavaScript功能
+    作者：Brics腾飞团队
+-->

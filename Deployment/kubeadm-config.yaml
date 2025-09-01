@@ -1,0 +1,11 @@
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: ClusterConfiguration
+kubernetesVersion: 1.31.4
+#这里要使用别名，不能用IP
+controlPlaneEndpoint: "192.168.1.113:6443"
+networking:
+  podSubnet: "10.244.0.0/16" # Pod 网络的 CIDR 范围
+  serviceSubnet: "10.96.0.0/12" # Service 网络的 CIDR 范围
+# 镜像拉取配置
+imageRepository: "registry.aliyuncs.com/google_containers"  # 指定镜像源
+

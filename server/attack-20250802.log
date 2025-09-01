@@ -1,0 +1,156 @@
+2025-08-02 00:42:06,558 - INFO - Server start: attack!
+2025-08-02 00:42:38,205 - INFO - Server start: attack!
+2025-08-02 00:51:13,319 - INFO - [warning]--攻击检测结果：ec3--未知类型攻击
+2025-08-02 01:27:53,994 - INFO - Server start: attack!
+2025-08-02 01:28:17,866 - INFO - Server start: attack!
+2025-08-02 01:29:27,437 - INFO - [performance]--攻击检测结果：phytium-desktop-processor-service-5f5b4558cd-dkh2d--程序崩溃
+2025-08-02 01:29:27,543 - INFO - [success]--攻击检测结果：phytium-desktop-processor-service-5f5b4558cd-dkh2d--已成功恢复
+2025-08-02 01:33:53,687 - INFO - [performance]--攻击检测结果：phytium-desktop-processor-service-5f5b4558cd-dkh2d--程序崩溃
+2025-08-02 01:33:53,790 - INFO - [success]--攻击检测结果：phytium-desktop-processor-service-5f5b4558cd-dkh2d--已成功恢复
+2025-08-02 02:03:14,298 - INFO - Server start: attack!
+2025-08-02 02:12:34,266 - INFO - [performance]--攻击检测结果：phytium-desktop-processor-service-5f5b4558cd-dkh2d--程序崩溃
+2025-08-02 02:12:34,373 - INFO - [success]--攻击检测结果：phytium-desktop-processor-service-5f5b4558cd-dkh2d--已成功恢复
+2025-08-02 02:12:36,061 - INFO - [success]--攻击检测结果：ec3--已成功恢复
+2025-08-02 02:17:53,308 - INFO - Server start: attack!
+2025-08-02 02:18:08,728 - INFO - [warning]--攻击检测结果：ec3--未知类型攻击
+2025-08-02 02:22:20,548 - INFO - [success]--攻击检测结果：ec3--已成功恢复
+2025-08-02 02:27:57,403 - INFO - Server start: attack!
+2025-08-02 02:31:26,278 - INFO - [success]--攻击检测结果：ec3--已成功恢复
+2025-08-02 02:38:03,350 - INFO - Server start: attack!
+2025-08-02 02:40:53,551 - INFO - attack_info: {'node_name': 'attack-simulator', 'status': 'Attack Isolation', 'timestamp': '2025-08-02T02:40:53.551296', 'attack_type': '发生容器逃离', 'severity': 'critical', 'last_updated': '2025-08-02T02:40:53.551304'}
+2025-08-02 02:40:53,774 - INFO - [success]--攻击检测结果：ec3--已成功恢复
+2025-08-02 02:56:52,496 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:52,505 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:53,742 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:53,748 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:54,992 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:54,995 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:56,165 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:56,168 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:56,172 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:57,353 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:57,356 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:57,359 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:58,555 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:58,559 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:58,563 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:59,734 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:59,737 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:56:59,742 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:00,921 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:00,925 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:00,927 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:02,080 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:02,083 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:02,086 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:03,288 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:03,291 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:03,294 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:04,614 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:04,617 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:04,622 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:05,778 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:05,781 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:05,791 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:06,962 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:06,966 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:06,969 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:08,166 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:08,169 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:08,173 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:09,346 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:09,350 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:09,353 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:10,567 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:10,571 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:10,574 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:11,761 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:11,764 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:11,767 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:13,025 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:13,028 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:13,030 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:14,195 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:14,201 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:14,204 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:15,378 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:15,383 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:15,386 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:16,556 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:16,562 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:16,565 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:17,734 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:17,737 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:17,739 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:18,946 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:18,952 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:18,956 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:20,129 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:20,133 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:20,136 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:21,316 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:21,319 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:21,322 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:22,501 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:22,504 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:22,509 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:23,696 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:23,699 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:23,711 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:24,868 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:24,872 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:24,875 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:26,034 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:26,038 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:26,043 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:27,225 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:27,228 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:27,231 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:28,384 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:28,388 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:28,390 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:29,586 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:29,590 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:29,592 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:30,794 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:30,798 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:30,800 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:31,993 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:31,997 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:32,006 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:33,180 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:33,183 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:33,186 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:34,348 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:34,352 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:34,361 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:35,516 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:35,520 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:35,522 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:36,729 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:36,731 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 02:57:37,892 - INFO - attack_info: {'node_name': 'ec3', 'status': 'Ready', 'timestamp': '20250802-024053', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T02:40:53.774460'}
+2025-08-02 10:06:58,114 - INFO - Server start: attack!
+2025-08-02 10:31:02,442 - INFO - Server start: attack!
+2025-08-02 10:32:45,518 - INFO - Server start: attack!
+2025-08-02 11:15:28,603 - INFO - Server start: attack!
+2025-08-02 11:18:14,282 - INFO - [performance]--攻击检测结果：phytium-desktop-image-capture-694cfc744c-h89k2--程序崩溃
+2025-08-02 11:18:14,415 - INFO - [success]--攻击检测结果：phytium-desktop-image-capture-694cfc744c-h89k2--已成功恢复
+2025-08-02 11:19:10,505 - INFO - attack_info: {'node_name': 'phytium-desktop-image-capture-694cfc744c-h89k2', 'status': 'Ready', 'timestamp': '20250802-111814', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T11:18:14.415830'}
+2025-08-02 11:19:11,785 - INFO - attack_info: {'node_name': 'phytium-desktop-image-capture-694cfc744c-h89k2', 'status': 'Ready', 'timestamp': '20250802-111814', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T11:18:14.415830'}
+2025-08-02 11:19:13,062 - INFO - attack_info: {'node_name': 'phytium-desktop-image-capture-694cfc744c-h89k2', 'status': 'Ready', 'timestamp': '20250802-111814', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T11:18:14.415830'}
+2025-08-02 11:19:14,340 - INFO - attack_info: {'node_name': 'phytium-desktop-image-capture-694cfc744c-h89k2', 'status': 'Ready', 'timestamp': '20250802-111814', 'attack_type': '已成功恢复', 'severity': 'success', 'last_updated': '2025-08-02T11:18:14.415830'}
+2025-08-02 11:27:50,547 - INFO - [warning]--攻击检测结果：phytium-desktop--设备算力耗尽
+2025-08-02 11:28:29,429 - INFO - [success]--攻击检测结果：phytium-desktop--已成功恢复
+2025-08-02 11:29:19,612 - INFO - [warning]--攻击检测结果：phytium-desktop--设备算力耗尽
+2025-08-02 11:29:45,302 - INFO - [success]--攻击检测结果：phytium-desktop--已成功恢复
+2025-08-02 12:08:41,070 - INFO - [warning]--攻击检测结果：phytium-desktop--设备算力耗尽
+2025-08-02 12:09:59,486 - INFO - [success]--攻击检测结果：phytium-desktop--已成功恢复
+2025-08-02 12:12:54,296 - INFO - [performance]--攻击检测结果：phytium-desktop-image-capture-694cfc744c-h89k2--程序崩溃
+2025-08-02 12:12:54,400 - INFO - [success]--攻击检测结果：phytium-desktop-image-capture-694cfc744c-h89k2--已成功恢复
+2025-08-02 12:14:01,642 - INFO - [performance]--攻击检测结果：phytium-desktop-image-capture-694cfc744c-h89k2--程序崩溃
+2025-08-02 12:14:01,747 - INFO - [success]--攻击检测结果：phytium-desktop-image-capture-694cfc744c-h89k2--已成功恢复
+2025-08-02 12:15:12,462 - INFO - [critical]--攻击检测结果：ec3--设备物理受损
+2025-08-02 12:16:07,933 - INFO - [success]--攻击检测结果：ec3--已成功恢复
+2025-08-02 12:18:36,004 - INFO - [warning]--攻击检测结果：phytium-desktop--设备算力耗尽
+2025-08-02 12:19:49,929 - INFO - [success]--攻击检测结果：phytium-desktop--已成功恢复

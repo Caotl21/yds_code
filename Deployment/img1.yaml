@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: detector-config-1
+data:
+  param.yaml: |
+    camera_id: "camera-0"
+    source: 0
+    small_modelpath: /models/v5lite_s.onnx
+    large_modelpath: /models/v5lite_g.onnx
+    small_model_name: v5lite_s
+    large_model_name: v5lite_g
+    classfile: /models/label_names
+    outfolder: stream_results
+    confThreshold: 0.2
+    nmsThreshold: 0.5
+    save_interval: 0
+    record: false
+    no_show: false
+    fps_limit: 30
+    use_large_model: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-capture
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-capture
+  template:
+    metadata:
+      labels:
+        app: image-capture
+    spec:
+      containers:
+        - name: capture
+          # image: crpi-v0s88r5y9kedn2bv.cn-shanghai.personal.cr.aliyuncs.com/zsns1/yds:camera_client_4
+          image: crpi-v0s88r5y9kedn2bv.cn-shanghai.personal.cr.aliyuncs.com/zsns1/yds:camera_client_ffmpeg_arm_0729
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: GRPC_HOST
+              # value: processor-service
+              value: 10.111.81.59
+            - name: GRPC_PORT
+              value: "50051"
+          # resources:
+          #   limits:
+          #     cpu: "0.5"
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: video
+              mountPath: /dev/video0
+              readOnly: true
+            - name: config-volume
+              mountPath: /app/param.yaml
+              subPath: param.yaml
+      volumes:
+        - name: video
+          hostPath:
+            path: /dev/video0
+        - name: config-volume
+          configMap:
+            name: detector-config-1
+      # kubectl label nodes <node-name> <label-key>=<label-value>
+      nodeSelector:
+        computing_device: compute_node3
+
+    

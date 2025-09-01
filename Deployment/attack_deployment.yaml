@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: attack-sim
+  labels:
+    app: attack-sim
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: attack-sim
+  template:
+    metadata:
+      labels:
+        app: attack-sim
+    spec:
+      hostPID: true
+      hostNetwork: true
+      containers:
+      - name: attack-sim
+        image: docker.io/library/attack:6.0
+        securityContext:
+          privileged: true
+          runAsUser: 0
+        imagePullPolicy: Never
+      nodeSelector:
+        computing_device: compute_node4

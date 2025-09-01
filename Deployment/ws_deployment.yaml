@@ -1,0 +1,54 @@
+# websocket-service.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ws-video-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ws-video-gateway
+  template:
+    metadata:
+      labels:
+        app: ws-video-gateway
+    spec:
+      containers:
+        - name: ws-video
+          image: crpi-v0s88r5y9kedn2bv.cn-shanghai.personal.cr.aliyuncs.com/zsns1/yds:ws_server_8 # 替换成你的镜像名
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000  # FastAPI 默认端口
+          env:
+            - name: REDIS_HOST_1
+              # value: redis-service  # 用于集群中的 Redis Service 名称
+              value: "10.100.221.231"  # 用于集群中的 Redis Service 名称
+            - name: REDIS_PORT_1
+              value: "6379"
+            - name: REDIS_HOST_2
+              value: redis-service-2  # 用于集群中的 Redis Service 名称
+            - name: REDIS_PORT_2
+              value: "6379"
+            - name: ARM_HOST
+              value: "192.168.1.116"
+          resources:
+            limits:
+              cpu: "1.5"
+      nodeSelector:
+        computing_device: compute_node2
+      #   sensing_device: sensing_node
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ws-video-gateway
+spec:
+  selector:
+    app: ws-video-gateway
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8000
+      nodePort: 30080
+  type: NodePort  # 如果你希望公网访问，可以改为 NodePort 或 LoadBalancer

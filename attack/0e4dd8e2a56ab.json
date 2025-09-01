@@ -1,0 +1,1095 @@
+{
+  "info": {
+    "config": {
+      "annotations": {
+        "io.kubernetes.container.hash": "ef418af2",
+        "io.kubernetes.container.restartCount": "37",
+        "io.kubernetes.container.terminationMessagePath": "/dev/termination-log",
+        "io.kubernetes.container.terminationMessagePolicy": "File",
+        "io.kubernetes.pod.terminationGracePeriod": "30"
+      },
+      "command": [
+        "kube-scheduler",
+        "--authentication-kubeconfig=/etc/kubernetes/scheduler.conf",
+        "--authorization-kubeconfig=/etc/kubernetes/scheduler.conf",
+        "--bind-address=127.0.0.1",
+        "--kubeconfig=/etc/kubernetes/scheduler.conf",
+        "--leader-elect=true"
+      ],
+      "envs": [
+        {
+          "key": "KUBERNETES_SERVICE_PORT",
+          "value": "443"
+        },
+        {
+          "key": "KUBERNETES_SERVICE_PORT_HTTPS",
+          "value": "443"
+        },
+        {
+          "key": "KUBE_DNS_PORT_53_UDP_PROTO",
+          "value": "udp"
+        },
+        {
+          "key": "KUBE_DNS_PORT_53_UDP_PORT",
+          "value": "53"
+        },
+        {
+          "key": "KUBE_DNS_SERVICE_PORT",
+          "value": "53"
+        },
+        {
+          "key": "KUBE_DNS_SERVICE_PORT_METRICS",
+          "value": "9153"
+        },
+        {
+          "key": "KUBE_DNS_PORT_53_TCP",
+          "value": "tcp://10.96.0.10:53"
+        },
+        {
+          "key": "KUBE_DNS_PORT_53_TCP_PROTO",
+          "value": "tcp"
+        },
+        {
+          "key": "KUBERNETES_PORT",
+          "value": "tcp://10.96.0.1:443"
+        },
+        {
+          "key": "KUBERNETES_PORT_443_TCP",
+          "value": "tcp://10.96.0.1:443"
+        },
+        {
+          "key": "KUBERNETES_PORT_443_TCP_PORT",
+          "value": "443"
+        },
+        {
+          "key": "KUBERNETES_PORT_443_TCP_ADDR",
+          "value": "10.96.0.1"
+        },
+        {
+          "key": "KUBE_DNS_PORT_9153_TCP_PORT",
+          "value": "9153"
+        },
+        {
+          "key": "KUBE_DNS_PORT_53_TCP_PORT",
+          "value": "53"
+        },
+        {
+          "key": "KUBE_DNS_PORT_53_TCP_ADDR",
+          "value": "10.96.0.10"
+        },
+        {
+          "key": "KUBE_DNS_PORT_9153_TCP",
+          "value": "tcp://10.96.0.10:9153"
+        },
+        {
+          "key": "KUBE_DNS_PORT_9153_TCP_PROTO",
+          "value": "tcp"
+        },
+        {
+          "key": "KUBE_DNS_PORT",
+          "value": "udp://10.96.0.10:53"
+        },
+        {
+          "key": "KUBE_DNS_PORT_53_UDP",
+          "value": "udp://10.96.0.10:53"
+        },
+        {
+          "key": "KUBE_DNS_PORT_9153_TCP_ADDR",
+          "value": "10.96.0.10"
+        },
+        {
+          "key": "KUBERNETES_SERVICE_HOST",
+          "value": "10.96.0.1"
+        },
+        {
+          "key": "KUBERNETES_PORT_443_TCP_PROTO",
+          "value": "tcp"
+        },
+        {
+          "key": "KUBE_DNS_SERVICE_HOST",
+          "value": "10.96.0.10"
+        },
+        {
+          "key": "KUBE_DNS_SERVICE_PORT_DNS",
+          "value": "53"
+        },
+        {
+          "key": "KUBE_DNS_SERVICE_PORT_DNS_TCP",
+          "value": "53"
+        },
+        {
+          "key": "KUBE_DNS_PORT_53_UDP_ADDR",
+          "value": "10.96.0.10"
+        }
+      ],
+      "image": {
+        "image": "sha256:3a66234066fe10fa299c0a52265f90a107450f0372652867118cd9007940d674"
+      },
+      "labels": {
+        "io.kubernetes.container.name": "kube-scheduler",
+        "io.kubernetes.pod.name": "kube-scheduler-zs-asus-tuf-gaming-f16-fx607jv-fx607jv",
+        "io.kubernetes.pod.namespace": "kube-system",
+        "io.kubernetes.pod.uid": "f689b535ba8d73b03aa14468c92755dc"
+      },
+      "linux": {
+        "resources": {
+          "cpu_period": 100000,
+          "cpu_shares": 102,
+          "hugepage_limits": [
+            {
+              "page_size": "2MB"
+            },
+            {
+              "page_size": "1GB"
+            }
+          ],
+          "oom_score_adj": -997,
+          "unified": {
+            "memory.oom.group": "1",
+            "memory.swap.max": "0"
+          }
+        },
+        "security_context": {
+          "masked_paths": [
+            "/proc/asound",
+            "/proc/acpi",
+            "/proc/kcore",
+            "/proc/keys",
+            "/proc/latency_stats",
+            "/proc/timer_list",
+            "/proc/timer_stats",
+            "/proc/sched_debug",
+            "/proc/scsi",
+            "/sys/firmware",
+            "/sys/devices/virtual/powercap"
+          ],
+          "namespace_options": {
+            "network": 2,
+            "pid": 1
+          },
+          "readonly_paths": [
+            "/proc/bus",
+            "/proc/fs",
+            "/proc/irq",
+            "/proc/sys",
+            "/proc/sysrq-trigger"
+          ],
+          "run_as_user": {},
+          "seccomp": {}
+        }
+      },
+      "log_path": "kube-scheduler/37.log",
+      "metadata": {
+        "attempt": 37,
+        "name": "kube-scheduler"
+      },
+      "mounts": [
+        {
+          "container_path": "/etc/kubernetes/scheduler.conf",
+          "host_path": "/etc/kubernetes/scheduler.conf",
+          "readonly": true
+        },
+        {
+          "container_path": "/etc/hosts",
+          "host_path": "/var/lib/kubelet/pods/f689b535ba8d73b03aa14468c92755dc/etc-hosts"
+        },
+        {
+          "container_path": "/dev/termination-log",
+          "host_path": "/var/lib/kubelet/pods/f689b535ba8d73b03aa14468c92755dc/containers/kube-scheduler/15aa90b1"
+        }
+      ]
+    },
+    "pid": 17693,
+    "removing": false,
+    "runtimeOptions": {
+      "systemd_cgroup": true
+    },
+    "runtimeSpec": {
+      "annotations": {
+        "io.kubernetes.cri.container-name": "kube-scheduler",
+        "io.kubernetes.cri.container-type": "container",
+        "io.kubernetes.cri.image-name": "registry.aliyuncs.com/google_containers/kube-scheduler:v1.31.4",
+        "io.kubernetes.cri.sandbox-id": "ae29ec8ac95aad1e891350f0e38b3f33cd23b56ca1f079f0871076db0026bd69",
+        "io.kubernetes.cri.sandbox-name": "kube-scheduler-zs-asus-tuf-gaming-f16-fx607jv-fx607jv",
+        "io.kubernetes.cri.sandbox-namespace": "kube-system",
+        "io.kubernetes.cri.sandbox-uid": "f689b535ba8d73b03aa14468c92755dc"
+      },
+      "linux": {
+        "cgroupsPath": "kubepods-burstable-podf689b535ba8d73b03aa14468c92755dc.slice:cri-containerd:0e4dd8e2a56abde9acbc9b16bceef14436c6dd9a98b093110826035e76537b17",
+        "maskedPaths": [
+          "/proc/asound",
+          "/proc/acpi",
+          "/proc/kcore",
+          "/proc/keys",
+          "/proc/latency_stats",
+          "/proc/timer_list",
+          "/proc/timer_stats",
+          "/proc/sched_debug",
+          "/proc/scsi",
+          "/sys/firmware",
+          "/sys/devices/virtual/powercap"
+        ],
+        "namespaces": [
+          {
+            "type": "pid"
+          },
+          {
+            "path": "/proc/11850/ns/ipc",
+            "type": "ipc"
+          },
+          {
+            "path": "/proc/11850/ns/uts",
+            "type": "uts"
+          },
+          {
+            "type": "mount"
+          },
+          {
+            "path": "/proc/11850/ns/net",
+            "type": "network"
+          },
+          {
+            "type": "cgroup"
+          }
+        ],
+        "readonlyPaths": [
+          "/proc/bus",
+          "/proc/fs",
+          "/proc/irq",
+          "/proc/sys",
+          "/proc/sysrq-trigger"
+        ],
+        "resources": {
+          "cpu": {
+            "period": 100000,
+            "shares": 102
+          },
+          "devices": [
+            {
+              "access": "rwm",
+              "allow": false
+            }
+          ],
+          "memory": {},
+          "unified": {
+            "memory.oom.group": "1",
+            "memory.swap.max": "0"
+          }
+        },
+        "seccomp": {
+          "architectures": [
+            "SCMP_ARCH_X86_64",
+            "SCMP_ARCH_X86",
+            "SCMP_ARCH_X32"
+          ],
+          "defaultAction": "SCMP_ACT_ERRNO",
+          "syscalls": [
+            {
+              "action": "SCMP_ACT_ALLOW",
+              "names": [
+                "accept",
+                "accept4",
+                "access",
+                "adjtimex",
+                "alarm",
+                "bind",
+                "brk",
+                "cachestat",
+                "capget",
+                "capset",
+                "chdir",
+                "chmod",
+                "chown",
+                "chown32",
+                "clock_adjtime",
+                "clock_adjtime64",
+                "clock_getres",
+                "clock_getres_time64",
+                "clock_gettime",
+                "clock_gettime64",
+                "clock_nanosleep",
+                "clock_nanosleep_time64",
+                "close",
+                "close_range",
+                "connect",
+                "copy_file_range",
+                "creat",
+                "dup",
+                "dup2",
+                "dup3",
+                "epoll_create",
+                "epoll_create1",
+                "epoll_ctl",
+                "epoll_ctl_old",
+                "epoll_pwait",
+                "epoll_pwait2",
+                "epoll_wait",
+                "epoll_wait_old",
+                "eventfd",
+                "eventfd2",
+                "execve",
+                "execveat",
+                "exit",
+                "exit_group",
+                "faccessat",
+                "faccessat2",
+                "fadvise64",
+                "fadvise64_64",
+                "fallocate",
+                "fanotify_mark",
+                "fchdir",
+                "fchmod",
+                "fchmodat",
+                "fchmodat2",
+                "fchown",
+                "fchown32",
+                "fchownat",
+                "fcntl",
+                "fcntl64",
+                "fdatasync",
+                "fgetxattr",
+                "flistxattr",
+                "flock",
+                "fork",
+                "fremovexattr",
+                "fsetxattr",
+                "fstat",
+                "fstat64",
+                "fstatat64",
+                "fstatfs",
+                "fstatfs64",
+                "fsync",
+                "ftruncate",
+                "ftruncate64",
+                "futex",
+                "futex_requeue",
+                "futex_time64",
+                "futex_wait",
+                "futex_waitv",
+                "futex_wake",
+                "futimesat",
+                "getcpu",
+                "getcwd",
+                "getdents",
+                "getdents64",
+                "getegid",
+                "getegid32",
+                "geteuid",
+                "geteuid32",
+                "getgid",
+                "getgid32",
+                "getgroups",
+                "getgroups32",
+                "getitimer",
+                "getpeername",
+                "getpgid",
+                "getpgrp",
+                "getpid",
+                "getppid",
+                "getpriority",
+                "getrandom",
+                "getresgid",
+                "getresgid32",
+                "getresuid",
+                "getresuid32",
+                "getrlimit",
+                "get_robust_list",
+                "getrusage",
+                "getsid",
+                "getsockname",
+                "getsockopt",
+                "get_thread_area",
+                "gettid",
+                "gettimeofday",
+                "getuid",
+                "getuid32",
+                "getxattr",
+                "inotify_add_watch",
+                "inotify_init",
+                "inotify_init1",
+                "inotify_rm_watch",
+                "io_cancel",
+                "ioctl",
+                "io_destroy",
+                "io_getevents",
+                "io_pgetevents",
+                "io_pgetevents_time64",
+                "ioprio_get",
+                "ioprio_set",
+                "io_setup",
+                "io_submit",
+                "io_uring_enter",
+                "io_uring_register",
+                "io_uring_setup",
+                "ipc",
+                "kill",
+                "landlock_add_rule",
+                "landlock_create_ruleset",
+                "landlock_restrict_self",
+                "lchown",
+                "lchown32",
+                "lgetxattr",
+                "link",
+                "linkat",
+                "listen",
+                "listxattr",
+                "llistxattr",
+                "_llseek",
+                "lremovexattr",
+                "lseek",
+                "lsetxattr",
+                "lstat",
+                "lstat64",
+                "madvise",
+                "membarrier",
+                "memfd_create",
+                "memfd_secret",
+                "mincore",
+                "mkdir",
+                "mkdirat",
+                "mknod",
+                "mknodat",
+                "mlock",
+                "mlock2",
+                "mlockall",
+                "map_shadow_stack",
+                "mmap",
+                "mmap2",
+                "mprotect",
+                "mq_getsetattr",
+                "mq_notify",
+                "mq_open",
+                "mq_timedreceive",
+                "mq_timedreceive_time64",
+                "mq_timedsend",
+                "mq_timedsend_time64",
+                "mq_unlink",
+                "mremap",
+                "msgctl",
+                "msgget",
+                "msgrcv",
+                "msgsnd",
+                "msync",
+                "munlock",
+                "munlockall",
+                "munmap",
+                "name_to_handle_at",
+                "nanosleep",
+                "newfstatat",
+                "_newselect",
+                "open",
+                "openat",
+                "openat2",
+                "pause",
+                "pidfd_open",
+                "pidfd_send_signal",
+                "pipe",
+                "pipe2",
+                "pkey_alloc",
+                "pkey_free",
+                "pkey_mprotect",
+                "poll",
+                "ppoll",
+                "ppoll_time64",
+                "prctl",
+                "pread64",
+                "preadv",
+                "preadv2",
+                "prlimit64",
+                "process_mrelease",
+                "pselect6",
+                "pselect6_time64",
+                "pwrite64",
+                "pwritev",
+                "pwritev2",
+                "read",
+                "readahead",
+                "readlink",
+                "readlinkat",
+                "readv",
+                "recv",
+                "recvfrom",
+                "recvmmsg",
+                "recvmmsg_time64",
+                "recvmsg",
+                "remap_file_pages",
+                "removexattr",
+                "rename",
+                "renameat",
+                "renameat2",
+                "restart_syscall",
+                "rmdir",
+                "rseq",
+                "rt_sigaction",
+                "rt_sigpending",
+                "rt_sigprocmask",
+                "rt_sigqueueinfo",
+                "rt_sigreturn",
+                "rt_sigsuspend",
+                "rt_sigtimedwait",
+                "rt_sigtimedwait_time64",
+                "rt_tgsigqueueinfo",
+                "sched_getaffinity",
+                "sched_getattr",
+                "sched_getparam",
+                "sched_get_priority_max",
+                "sched_get_priority_min",
+                "sched_getscheduler",
+                "sched_rr_get_interval",
+                "sched_rr_get_interval_time64",
+                "sched_setaffinity",
+                "sched_setattr",
+                "sched_setparam",
+                "sched_setscheduler",
+                "sched_yield",
+                "seccomp",
+                "select",
+                "semctl",
+                "semget",
+                "semop",
+                "semtimedop",
+                "semtimedop_time64",
+                "send",
+                "sendfile",
+                "sendfile64",
+                "sendmmsg",
+                "sendmsg",
+                "sendto",
+                "setfsgid",
+                "setfsgid32",
+                "setfsuid",
+                "setfsuid32",
+                "setgid",
+                "setgid32",
+                "setgroups",
+                "setgroups32",
+                "setitimer",
+                "setpgid",
+                "setpriority",
+                "setregid",
+                "setregid32",
+                "setresgid",
+                "setresgid32",
+                "setresuid",
+                "setresuid32",
+                "setreuid",
+                "setreuid32",
+                "setrlimit",
+                "set_robust_list",
+                "setsid",
+                "setsockopt",
+                "set_thread_area",
+                "set_tid_address",
+                "setuid",
+                "setuid32",
+                "setxattr",
+                "shmat",
+                "shmctl",
+                "shmdt",
+                "shmget",
+                "shutdown",
+                "sigaltstack",
+                "signalfd",
+                "signalfd4",
+                "sigprocmask",
+                "sigreturn",
+                "socketcall",
+                "socketpair",
+                "splice",
+                "stat",
+                "stat64",
+                "statfs",
+                "statfs64",
+                "statx",
+                "symlink",
+                "symlinkat",
+                "sync",
+                "sync_file_range",
+                "syncfs",
+                "sysinfo",
+                "tee",
+                "tgkill",
+                "time",
+                "timer_create",
+                "timer_delete",
+                "timer_getoverrun",
+                "timer_gettime",
+                "timer_gettime64",
+                "timer_settime",
+                "timer_settime64",
+                "timerfd_create",
+                "timerfd_gettime",
+                "timerfd_gettime64",
+                "timerfd_settime",
+                "timerfd_settime64",
+                "times",
+                "tkill",
+                "truncate",
+                "truncate64",
+                "ugetrlimit",
+                "umask",
+                "uname",
+                "unlink",
+                "unlinkat",
+                "utime",
+                "utimensat",
+                "utimensat_time64",
+                "utimes",
+                "vfork",
+                "vmsplice",
+                "wait4",
+                "waitid",
+                "waitpid",
+                "write",
+                "writev"
+              ]
+            },
+            {
+              "action": "SCMP_ACT_ALLOW",
+              "args": [
+                {
+                  "index": 0,
+                  "op": "SCMP_CMP_NE",
+                  "value": 40
+                }
+              ],
+              "names": [
+                "socket"
+              ]
+            },
+            {
+              "action": "SCMP_ACT_ALLOW",
+              "args": [
+                {
+                  "index": 0,
+                  "op": "SCMP_CMP_EQ",
+                  "value": 0
+                }
+              ],
+              "names": [
+                "personality"
+              ]
+            },
+            {
+              "action": "SCMP_ACT_ALLOW",
+              "args": [
+                {
+                  "index": 0,
+                  "op": "SCMP_CMP_EQ",
+                  "value": 8
+                }
+              ],
+              "names": [
+                "personality"
+              ]
+            },
+            {
+              "action": "SCMP_ACT_ALLOW",
+              "args": [
+                {
+                  "index": 0,
+                  "op": "SCMP_CMP_EQ",
+                  "value": 131072
+                }
+              ],
+              "names": [
+                "personality"
+              ]
+            },
+            {
+              "action": "SCMP_ACT_ALLOW",
+              "args": [
+                {
+                  "index": 0,
+                  "op": "SCMP_CMP_EQ",
+                  "value": 131080
+                }
+              ],
+              "names": [
+                "personality"
+              ]
+            },
+            {
+              "action": "SCMP_ACT_ALLOW",
+              "args": [
+                {
+                  "index": 0,
+                  "op": "SCMP_CMP_EQ",
+                  "value": 4294967295
+                }
+              ],
+              "names": [
+                "personality"
+              ]
+            },
+            {
+              "action": "SCMP_ACT_ALLOW",
+              "names": [
+                "process_vm_readv",
+                "process_vm_writev",
+                "ptrace"
+              ]
+            },
+            {
+              "action": "SCMP_ACT_ALLOW",
+              "names": [
+                "arch_prctl",
+                "modify_ldt"
+              ]
+            },
+            {
+              "action": "SCMP_ACT_ALLOW",
+              "names": [
+                "chroot"
+              ]
+            },
+            {
+              "action": "SCMP_ACT_ALLOW",
+              "args": [
+                {
+                  "index": 0,
+                  "op": "SCMP_CMP_MASKED_EQ",
+                  "value": 2114060288
+                }
+              ],
+              "names": [
+                "clone"
+              ]
+            },
+            {
+              "action": "SCMP_ACT_ERRNO",
+              "errnoRet": 38,
+              "names": [
+                "clone3"
+              ]
+            }
+          ]
+        }
+      },
+      "mounts": [
+        {
+          "destination": "/proc",
+          "options": [
+            "nosuid",
+            "noexec",
+            "nodev"
+          ],
+          "source": "proc",
+          "type": "proc"
+        },
+        {
+          "destination": "/dev",
+          "options": [
+            "nosuid",
+            "strictatime",
+            "mode=755",
+            "size=65536k"
+          ],
+          "source": "tmpfs",
+          "type": "tmpfs"
+        },
+        {
+          "destination": "/dev/pts",
+          "options": [
+            "nosuid",
+            "noexec",
+            "newinstance",
+            "ptmxmode=0666",
+            "mode=0620",
+            "gid=5"
+          ],
+          "source": "devpts",
+          "type": "devpts"
+        },
+        {
+          "destination": "/dev/mqueue",
+          "options": [
+            "nosuid",
+            "noexec",
+            "nodev"
+          ],
+          "source": "mqueue",
+          "type": "mqueue"
+        },
+        {
+          "destination": "/sys",
+          "options": [
+            "nosuid",
+            "noexec",
+            "nodev",
+            "ro"
+          ],
+          "source": "sysfs",
+          "type": "sysfs"
+        },
+        {
+          "destination": "/sys/fs/cgroup",
+          "options": [
+            "nosuid",
+            "noexec",
+            "nodev",
+            "relatime",
+            "ro"
+          ],
+          "source": "cgroup",
+          "type": "cgroup"
+        },
+        {
+          "destination": "/etc/hosts",
+          "options": [
+            "rbind",
+            "rprivate",
+            "rw"
+          ],
+          "source": "/var/lib/kubelet/pods/f689b535ba8d73b03aa14468c92755dc/etc-hosts",
+          "type": "bind"
+        },
+        {
+          "destination": "/dev/termination-log",
+          "options": [
+            "rbind",
+            "rprivate",
+            "rw"
+          ],
+          "source": "/var/lib/kubelet/pods/f689b535ba8d73b03aa14468c92755dc/containers/kube-scheduler/15aa90b1",
+          "type": "bind"
+        },
+        {
+          "destination": "/etc/hostname",
+          "options": [
+            "rbind",
+            "rprivate",
+            "rw"
+          ],
+          "source": "/var/lib/containerd/io.containerd.grpc.v1.cri/sandboxes/ae29ec8ac95aad1e891350f0e38b3f33cd23b56ca1f079f0871076db0026bd69/hostname",
+          "type": "bind"
+        },
+        {
+          "destination": "/etc/resolv.conf",
+          "options": [
+            "rbind",
+            "rprivate",
+            "rw"
+          ],
+          "source": "/var/lib/containerd/io.containerd.grpc.v1.cri/sandboxes/ae29ec8ac95aad1e891350f0e38b3f33cd23b56ca1f079f0871076db0026bd69/resolv.conf",
+          "type": "bind"
+        },
+        {
+          "destination": "/dev/shm",
+          "options": [
+            "rbind",
+            "rprivate",
+            "rw"
+          ],
+          "source": "/run/containerd/io.containerd.grpc.v1.cri/sandboxes/ae29ec8ac95aad1e891350f0e38b3f33cd23b56ca1f079f0871076db0026bd69/shm",
+          "type": "bind"
+        },
+        {
+          "destination": "/etc/kubernetes/scheduler.conf",
+          "options": [
+            "rbind",
+            "rprivate",
+            "ro"
+          ],
+          "source": "/etc/kubernetes/scheduler.conf",
+          "type": "bind"
+        }
+      ],
+      "ociVersion": "1.1.0",
+      "process": {
+        "apparmorProfile": "cri-containerd.apparmor.d",
+        "args": [
+          "kube-scheduler",
+          "--authentication-kubeconfig=/etc/kubernetes/scheduler.conf",
+          "--authorization-kubeconfig=/etc/kubernetes/scheduler.conf",
+          "--bind-address=127.0.0.1",
+          "--kubeconfig=/etc/kubernetes/scheduler.conf",
+          "--leader-elect=true"
+        ],
+        "capabilities": {
+          "bounding": [
+            "CAP_CHOWN",
+            "CAP_DAC_OVERRIDE",
+            "CAP_FSETID",
+            "CAP_FOWNER",
+            "CAP_MKNOD",
+            "CAP_NET_RAW",
+            "CAP_SETGID",
+            "CAP_SETUID",
+            "CAP_SETFCAP",
+            "CAP_SETPCAP",
+            "CAP_NET_BIND_SERVICE",
+            "CAP_SYS_CHROOT",
+            "CAP_KILL",
+            "CAP_AUDIT_WRITE"
+          ],
+          "effective": [
+            "CAP_CHOWN",
+            "CAP_DAC_OVERRIDE",
+            "CAP_FSETID",
+            "CAP_FOWNER",
+            "CAP_MKNOD",
+            "CAP_NET_RAW",
+            "CAP_SETGID",
+            "CAP_SETUID",
+            "CAP_SETFCAP",
+            "CAP_SETPCAP",
+            "CAP_NET_BIND_SERVICE",
+            "CAP_SYS_CHROOT",
+            "CAP_KILL",
+            "CAP_AUDIT_WRITE"
+          ],
+          "permitted": [
+            "CAP_CHOWN",
+            "CAP_DAC_OVERRIDE",
+            "CAP_FSETID",
+            "CAP_FOWNER",
+            "CAP_MKNOD",
+            "CAP_NET_RAW",
+            "CAP_SETGID",
+            "CAP_SETUID",
+            "CAP_SETFCAP",
+            "CAP_SETPCAP",
+            "CAP_NET_BIND_SERVICE",
+            "CAP_SYS_CHROOT",
+            "CAP_KILL",
+            "CAP_AUDIT_WRITE"
+          ]
+        },
+        "cwd": "/",
+        "env": [
+          "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "HOSTNAME=zs-ASUS-TUF-Gaming-F16-FX607JV-FX607JV",
+          "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt",
+          "KUBERNETES_SERVICE_PORT=443",
+          "KUBERNETES_SERVICE_PORT_HTTPS=443",
+          "KUBE_DNS_PORT_53_UDP_PROTO=udp",
+          "KUBE_DNS_PORT_53_UDP_PORT=53",
+          "KUBE_DNS_SERVICE_PORT=53",
+          "KUBE_DNS_SERVICE_PORT_METRICS=9153",
+          "KUBE_DNS_PORT_53_TCP=tcp://10.96.0.10:53",
+          "KUBE_DNS_PORT_53_TCP_PROTO=tcp",
+          "KUBERNETES_PORT=tcp://10.96.0.1:443",
+          "KUBERNETES_PORT_443_TCP=tcp://10.96.0.1:443",
+          "KUBERNETES_PORT_443_TCP_PORT=443",
+          "KUBERNETES_PORT_443_TCP_ADDR=10.96.0.1",
+          "KUBE_DNS_PORT_9153_TCP_PORT=9153",
+          "KUBE_DNS_PORT_53_TCP_PORT=53",
+          "KUBE_DNS_PORT_53_TCP_ADDR=10.96.0.10",
+          "KUBE_DNS_PORT_9153_TCP=tcp://10.96.0.10:9153",
+          "KUBE_DNS_PORT_9153_TCP_PROTO=tcp",
+          "KUBE_DNS_PORT=udp://10.96.0.10:53",
+          "KUBE_DNS_PORT_53_UDP=udp://10.96.0.10:53",
+          "KUBE_DNS_PORT_9153_TCP_ADDR=10.96.0.10",
+          "KUBERNETES_SERVICE_HOST=10.96.0.1",
+          "KUBERNETES_PORT_443_TCP_PROTO=tcp",
+          "KUBE_DNS_SERVICE_HOST=10.96.0.10",
+          "KUBE_DNS_SERVICE_PORT_DNS=53",
+          "KUBE_DNS_SERVICE_PORT_DNS_TCP=53",
+          "KUBE_DNS_PORT_53_UDP_ADDR=10.96.0.10"
+        ],
+        "oomScoreAdj": -997,
+        "user": {
+          "additionalGids": [
+            0
+          ],
+          "gid": 0,
+          "uid": 0
+        }
+      },
+      "root": {
+        "path": "rootfs"
+      }
+    },
+    "runtimeType": "io.containerd.runc.v2",
+    "sandboxID": "ae29ec8ac95aad1e891350f0e38b3f33cd23b56ca1f079f0871076db0026bd69",
+    "snapshotKey": "0e4dd8e2a56abde9acbc9b16bceef14436c6dd9a98b093110826035e76537b17",
+    "snapshotter": "overlayfs"
+  },
+  "status": {
+    "annotations": {
+      "io.kubernetes.container.hash": "ef418af2",
+      "io.kubernetes.container.restartCount": "37",
+      "io.kubernetes.container.terminationMessagePath": "/dev/termination-log",
+      "io.kubernetes.container.terminationMessagePolicy": "File",
+      "io.kubernetes.pod.terminationGracePeriod": "30"
+    },
+    "createdAt": "2025-08-01T20:30:52.601466872+08:00",
+    "exitCode": 0,
+    "finishedAt": "0001-01-01T00:00:00Z",
+    "id": "0e4dd8e2a56abde9acbc9b16bceef14436c6dd9a98b093110826035e76537b17",
+    "image": {
+      "annotations": {},
+      "image": "registry.aliyuncs.com/google_containers/kube-scheduler:v1.31.4",
+      "runtimeHandler": "",
+      "userSpecifiedImage": ""
+    },
+    "imageId": "",
+    "imageRef": "registry.aliyuncs.com/google_containers/kube-scheduler@sha256:48b1bbb657409e02fd6b09f64cdf62fd89b8320f64e48af1c536bf4c48305210",
+    "labels": {
+      "io.kubernetes.container.name": "kube-scheduler",
+      "io.kubernetes.pod.name": "kube-scheduler-zs-asus-tuf-gaming-f16-fx607jv-fx607jv",
+      "io.kubernetes.pod.namespace": "kube-system",
+      "io.kubernetes.pod.uid": "f689b535ba8d73b03aa14468c92755dc"
+    },
+    "logPath": "/var/log/pods/kube-system_kube-scheduler-zs-asus-tuf-gaming-f16-fx607jv-fx607jv_f689b535ba8d73b03aa14468c92755dc/kube-scheduler/37.log",
+    "message": "",
+    "metadata": {
+      "attempt": 37,
+      "name": "kube-scheduler"
+    },
+    "mounts": [
+      {
+        "containerPath": "/etc/kubernetes/scheduler.conf",
+        "gidMappings": [],
+        "hostPath": "/etc/kubernetes/scheduler.conf",
+        "propagation": "PROPAGATION_PRIVATE",
+        "readonly": true,
+        "recursiveReadOnly": false,
+        "selinuxRelabel": false,
+        "uidMappings": []
+      },
+      {
+        "containerPath": "/etc/hosts",
+        "gidMappings": [],
+        "hostPath": "/var/lib/kubelet/pods/f689b535ba8d73b03aa14468c92755dc/etc-hosts",
+        "propagation": "PROPAGATION_PRIVATE",
+        "readonly": false,
+        "recursiveReadOnly": false,
+        "selinuxRelabel": false,
+        "uidMappings": []
+      },
+      {
+        "containerPath": "/dev/termination-log",
+        "gidMappings": [],
+        "hostPath": "/var/lib/kubelet/pods/f689b535ba8d73b03aa14468c92755dc/containers/kube-scheduler/15aa90b1",
+        "propagation": "PROPAGATION_PRIVATE",
+        "readonly": false,
+        "recursiveReadOnly": false,
+        "selinuxRelabel": false,
+        "uidMappings": []
+      }
+    ],
+    "reason": "",
+    "resources": {
+      "linux": {
+        "cpuPeriod": "100000",
+        "cpuQuota": "0",
+        "cpuShares": "102",
+        "cpusetCpus": "",
+        "cpusetMems": "",
+        "hugepageLimits": [],
+        "memoryLimitInBytes": "0",
+        "memorySwapLimitInBytes": "0",
+        "oomScoreAdj": "-997",
+        "unified": {
+          "memory.oom.group": "1",
+          "memory.swap.max": "0"
+        }
+      }
+    },
+    "startedAt": "2025-08-01T20:30:52.671580058+08:00",
+    "state": "CONTAINER_RUNNING",
+    "user": null
+  }
+}

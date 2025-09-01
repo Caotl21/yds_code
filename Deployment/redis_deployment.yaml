@@ -1,0 +1,37 @@
+# redis-service.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: m.daocloud.io/docker.io/library/redis:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6379
+      nodeSelector:
+        computing_device: compute_node2
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+spec:
+  type: ClusterIP
+  clusterIP: 10.96.252.224  # 指定一个在 ClusterIP 范围内、未被占用的地址
+  selector:
+    app: redis
+  ports:
+    - port: 6379
+      targetPort: 6379

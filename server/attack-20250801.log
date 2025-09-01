@@ -1,0 +1,35 @@
+2025-08-01 02:20:14,673 - INFO - Server start: attack!
+2025-08-01 03:52:56,149 - INFO - Server start: attack!
+2025-08-01 03:53:20,419 - INFO - Server start: attack!
+2025-08-01 04:07:08,932 - INFO - Server start: attack!
+2025-08-01 04:11:02,968 - INFO - Server start: attack!
+2025-08-01 04:14:21,351 - INFO - Server start: attack!
+2025-08-01 04:39:09,981 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 04:40:37,286 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复
+2025-08-01 04:50:36,927 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 04:52:41,410 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复
+2025-08-01 04:53:09,497 - INFO - Server start: attack!
+2025-08-01 04:54:52,198 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 04:55:52,586 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复
+2025-08-01 04:56:52,789 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 04:58:11,659 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复
+2025-08-01 05:01:03,114 - INFO - [performance]--攻击检测结果：k8s-node-rp5-1-image-capture-2-8498fcfb7d-5gwwl--程序崩溃
+2025-08-01 05:01:03,318 - INFO - [success]--攻击检测结果：k8s-node-rp5-1-image-capture-2-8498fcfb7d-5gwwl--已成功恢复
+2025-08-01 05:02:59,320 - INFO - [critical]--攻击检测结果：ec3--设备物理受损
+2025-08-01 05:04:23,155 - INFO - [success]--攻击检测结果：ec3--已成功恢复
+2025-08-01 05:08:09,107 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 05:08:15,558 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复
+2025-08-01 05:08:23,990 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 05:08:27,479 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复
+2025-08-01 05:08:31,282 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 05:08:37,147 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复
+2025-08-01 05:08:40,413 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 05:08:52,234 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复
+2025-08-01 05:08:56,663 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 05:09:00,556 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复
+2025-08-01 05:09:06,207 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 05:09:26,430 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复
+2025-08-01 05:09:30,742 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 05:09:44,201 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复
+2025-08-01 05:09:50,689 - INFO - [warning]--攻击检测结果：k8s-node-rp5-1--设备算力耗尽
+2025-08-01 05:10:01,821 - INFO - [success]--攻击检测结果：k8s-node-rp5-1--已成功恢复

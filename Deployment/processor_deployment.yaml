@@ -1,0 +1,200 @@
+# ConfigMap: param.yaml 配置
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: processor-config-1
+data:
+  param.yaml: |
+    camera_id: camera-1
+    source: 0
+    small_modelpath_ncnn_param: "/models/eopt_int8.param"
+    small_modelpath_ncnn_bin: "/models/eopt_int8.bin"
+    large_modelpath_ncnn_param: "/models/sopt.param"
+    large_modelpath_ncnn_bin: "/models/sopt.bin"
+    small_model_name: "v5lite_e_int8"
+    large_model_name: "v5lite_s"
+    classfile: "/models/label_names"
+    outfolder: "stream_results"
+    confThreshold: 0.25
+    nmsThreshold: 0.45
+    save_interval: 0
+    record: false
+    no_show: true
+    fps_limit: 30
+    use_large_model: true
+    cpu_usage_threshold: 0.6
+    num_threads: 4
+    use_gpu: false
+    use_int8_small: false
+    use_int8_large: true
+    target_size: 320
+---
+# ConfigMap: param.yaml 配置
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: processor-config-2
+data:
+  param.yaml: |
+    camera_id: camera-2
+    source: 2
+    small_modelpath_ncnn_param: "/models/eopt_int8.param"
+    small_modelpath_ncnn_bin: "/models/eopt_int8.bin"
+    large_modelpath_ncnn_param: "/models/sopt.param"
+    large_modelpath_ncnn_bin: "/models/sopt.bin"
+    small_model_name: "v5lite_e_int8"
+    large_model_name: "v5lite_s"
+    classfile: "/models/label_names"
+    outfolder: "stream_results"
+    confThreshold: 0.25
+    nmsThreshold: 0.45
+    save_interval: 0
+    record: false
+    no_show: true
+    fps_limit: 30
+    use_large_model: true
+    cpu_usage_threshold: 0.6
+    num_threads: 4
+    use_gpu: false
+    use_int8_small: false
+    use_int8_large: true
+    target_size: 320
+
+---
+# processor-service.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: processor-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: processor-service
+  template:
+    metadata:
+      labels:
+        app: processor-service
+    spec:
+      containers:
+        - name: processor
+          image: crpi-v0s88r5y9kedn2bv.cn-shanghai.personal.cr.aliyuncs.com/zsns1/yds:processor_server_7
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: REDIS_HOST
+              # value: redis-service
+              value: 10.96.252.224
+            - name: REDIS_PORT
+              value: "6379"
+            - name: GRPC_HOST
+              value: "0.0.0.0"
+            - name: GRPC_PORT
+              value: "50051"
+            - name: REDIS_channel
+              value: "video_channel_1"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/param.yaml
+              subPath: param.yaml
+            - name: model-volume
+              mountPath: /models
+          # resources:
+          #   limits:
+          #     cpu: "2"
+          securityContext:
+            privileged: true
+      volumes:
+        - name: config-volume
+          configMap:
+            name: processor-config-1
+        - name: model-volume
+          hostPath:
+            path: /yds/models  # 替换为实际模型路径
+      nodeSelector:
+        computing_device: compute_node1
+        # sensing_device: sensing_node
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: processor-service
+spec:
+  type: ClusterIP
+  clusterIP: 10.111.81.59
+  selector:
+    app: processor-service
+  ports:
+    - port: 50051
+      targetPort: 50051
+      protocol: TCP
+  
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: processor-service-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: processor-service-2
+  template:
+    metadata:
+      labels:
+        app: processor-service-2
+    spec:
+      containers:
+        - name: processor
+          image: crpi-v0s88r5y9kedn2bv.cn-shanghai.personal.cr.aliyuncs.com/zsns1/yds:processor_server_7
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: REDIS_HOST
+              # value: redis-service
+              value: 10.96.252.224
+            - name: REDIS_PORT
+              value: "6379"
+            - name: GRPC_HOST
+              value: "0.0.0.0"
+            - name: GRPC_PORT
+              value: "50052"  # 修改端口
+            - name: REDIS_channel
+              value: "video_channel_2"  # 修改频道
+          volumeMounts:
+            - name: config-volume
+              mountPath: /app/param.yaml
+              subPath: param.yaml
+            - name: model-volume
+              mountPath: /models
+          # resources:
+          #   limits:
+          #     cpu: "2"
+          securityContext:
+            privileged: true
+      volumes:
+        - name: config-volume
+          configMap:
+            name: processor-config-2  # 修改 configMap 名称（如有）
+        - name: model-volume
+          hostPath:
+            path: /yds/models
+      nodeSelector:
+        computing_device: compute_node3  # 确保部署在正确的节点上
+        # sensing_device: sensing_node
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: processor-service-2
+spec:
+  type: ClusterIP
+  clusterIP: 10.98.70.209
+  selector:
+    app: processor-service-2
+  ports:
+    - port: 50052
+      targetPort: 50052
+      protocol: TCP
+  
